@@ -1,5 +1,29 @@
 $url: '~@';
 
+.info {
+  display: flex;
+  border-bottom: 1px solid #000;
+  padding: 15px 60px;
+
+  p {
+    font-size: 14px;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: bold;
+    color: red;
+
+    &.blue {
+      color: blue;
+    }
+  }
+}
+
 // colors  -----------------------------------
 $main-bg: #f4f4f4;
 $main-color-text: #000;
