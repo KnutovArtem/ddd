@@ -1,0 +1,335 @@
+$url: '~@';
+
+// colors  -----------------------------------
+$main-bg: #f4f4f4;
+$main-color-text: #000;
+$color--accent: #FFE52B;
+$color--accent-hover: rgba(255, 229, 43, 0.5);
+
+@font-face {
+  font-family: 'TinkoffSans', sans-serif;
+  src: url('~@/fonts/TinkoffSans.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  width: 100vw;
+  background: $main-bg;
+  font-family: 'TinkoffSans', sans-serif;
+  color: $main-color-text;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+a, p {
+  line-height: 1.8;
+}
+
+#app,
+.main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+%container {
+  position: relative;
+  max-width: 1590px;
+  width: 100%;
+  padding: 0 75px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1920px) {
+    max-width: 1390px;
+  }
+  @media screen and (max-width: 1440px) {
+    padding: 0 60px;
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 0 40px;
+  }
+  @media screen and (max-width: 425px) {
+    padding: 0 15px;
+  }
+}
+
+.container {
+  @extend %container;
+}
+
+.button--black {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 65px;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #000;
+  color: #fff;
+  margin: 30px 0;
+}
+
+.button--bd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 65px;
+  margin: 30px 0;
+  border: 1px solid grey;
+  border-radius: 5px;
+  color: #000;
+  font-size: 16px;
+}
+
+.button--white {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 330px;
+  width: max-content;
+  height: 65px;
+  padding: 0 35px;
+  border-radius: 17px;
+  background: #fafafa;
+  border: 2px solid #fff;
+  color: #000;
+  font-size: 16px;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  &:hover {
+    background: $color--accent-hover;
+    transition: all .45s ease-in-out;
+    cursor: pointer;
+    color: #000;
+  }
+}
+
+.button--white.active {
+  background: $color--accent;
+  border: 1px solid #fff6af;
+  color: #000;
+}
+
+.button--back {
+  position: relative;
+  width: max-content;
+  font-size: 16px;
+  color: #000;
+  margin: 30px 30px 30px 0;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #000;
+}
+
+.button--go {
+  position: absolute;
+  right: -15px;
+  top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background: $color--accent;
+  border-radius: 150px;
+  font-size: 17px;
+  color: #000;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    width: 50px;
+    height: 100px;
+    background: url("~@/img/lightning.png") no-repeat 50% 50%/100%;
+  }
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.button--answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 65px;
+  border-radius: 58px;
+  border: 1px solid grey;
+  margin-bottom: 5px;
+
+  &:hover {
+    border: 1px solid #000000;
+    cursor: pointer;
+  }
+
+  &.true {
+    border: 3px solid green;
+  }
+
+  &.false {
+    border: 3px solid red;
+  }
+}
+
+.monetca {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 450px;
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 70px;
+  padding: 0 60px;
+  margin-top: 35px;
+
+  &__logo {
+    width: 100%;
+    max-width: 255px;
+    height: 72px;
+    background: url("~@/img/logo.svg") no-repeat 50% 50%/100%;
+  }
+
+  &__social {
+    align-items: center;
+    display: flex;
+    height: 100%;
+
+    .icon {
+      display: block;
+      width: 40px;
+      height: 40px;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+
+      &-ins {
+        background: url("~@/img/icons/instgram.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-youtube {
+        background: url("~@/img/icons/youtube.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-vk {
+        background: url("~@/img/icons/vk.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-facebook {
+        background: url("~@/img/icons/fecebook.svg") no-repeat 50% 50%/100%;
+      }
+    }
+  }
+}
+
+.main-content {
+  padding-top: 105px;
+}
+
+
+.h1 {
+  font-size: 70px;
+  margin-bottom: 110px;
+}
+
+.section {
+  display: flex;
+  position: relative;
+
+  /*  &::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: 0;
+      width: 450px;
+      height: 300px;
+      background: #9c8fe0;
+      border-radius: 50% 25% 15% 25%;
+      filter: blur(55px);
+      z-index: -1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 0;
+      width: 250px;
+      height: 250px;
+      background: pink;
+      border-radius: 50% 25% 15% 25%;
+      filter: blur(55px);
+      z-index: -1;
+    }*/
+
+  &-picture {
+    width: 40vw;
+    display: none;
+  }
+
+  &-text {
+    width: 60vw;
+    padding-top: 30px;
+    padding-right: 90px;
+    padding: 50px;
+  }
+
+}
+
+
+.first-screen {
+  &__desc {
+    max-width: 550px;
+  }
+}
+
+
+.table {
+  width: 500px;
+  height: 300px;
+  border-radius: 15px;
+  border: 2px solid white;
+  padding: 50px;
+  margin-bottom: 30px;
+  background: gainsboro;
+}
+
+.oppa {
+  width: 65%;
+  height: 45%;
+  margin: 0 auto;
+  object-fit: contain;
+}
