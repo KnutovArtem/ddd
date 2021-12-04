@@ -33,7 +33,7 @@ $color--accent-hover: rgba(255, 229, 43, 0.5);
 @font-face {
   font-family: 'TinkoffSans', sans-serif;
   src: url('~@/fonts/TinkoffSans.woff2') format('woff2');
-  font-weight: 400;
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -89,6 +89,181 @@ a, p {
   @extend %container;
 }
 
+.header {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 70px;
+  padding: 0 60px;
+  margin-top: 35px;
+
+  &__logo {
+    width: 100%;
+    max-width: 355px;
+    height: 100%;
+    background: url("~@/img/logo.svg") no-repeat 50% 50%/100%;
+  }
+
+  &__social {
+    align-items: center;
+    display: flex;
+    height: 100%;
+
+    .icon {
+      display: block;
+      width: 40px;
+      height: 40px;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+
+      &-ins {
+        background: url("~@/img/icons/instgram.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-youtube {
+        background: url("~@/img/icons/youtube.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-vk {
+        background: url("~@/img/icons/vk.svg") no-repeat 50% 50%/100%;
+      }
+
+      &-facebook {
+        background: url("~@/img/icons/fecebook.svg") no-repeat 50% 50%/100%;
+      }
+    }
+  }
+}
+
+.section {
+  position: relative;
+  display: flex;
+
+  .background {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 415px;
+    height: 200px;
+    border-radius: 50% 25% 15% 25%;
+    background: #F88CD5;
+    filter: blur(55px);
+    transform: rotate(21.91deg);
+    z-index: -1;
+
+    animation: blur_0 4s ease-in infinite forwards alternate;
+    @keyframes blur_0 {
+      0% {
+        opacity: 1;
+      }
+      40% {
+        transform: translate(100px, 50px) rotate(10deg);
+        opacity: .8;
+      }
+      100% {
+        transform: translate(-50px, -50px) rotate(20deg);
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -50%;
+      width: 260px;
+      height: 260px;
+      background: #5D31FF;
+      filter: blur(130px);
+      z-index: 5;
+
+      animation: blur_1 4s ease-in infinite forwards alternate;
+      @keyframes blur_1 {
+        0% {
+          transform: translate(0);
+        }
+        40% {
+          transform: translate(40px, 50px);
+        }
+        100% {
+          transform: translate(-140px, -50px);
+        }
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -50%;
+      bottom: -150%;
+      border-radius: 50% 25% 15% 25%;
+      width: 658.71px;
+      height: 252.43px;
+      background: #FFD262;
+      filter: blur(180px);
+      transform: rotate(-7.32deg);
+      z-index: -2;
+
+      animation: blur_2 4s ease-in infinite forwards alternate;
+      @keyframes blur_2 {
+        0% {
+          transform: translate(0);
+        }
+        40% {
+          transform: translate(-40px, -50px);
+        }
+        100% {
+          transform: translate(140px, 50px);
+        }
+      }
+
+
+    }
+  }
+
+  &__picture {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 45vw;
+    height: 85vh;
+    transform: translate(15%, -5%);
+
+    .img {
+      width: 95%;
+      min-width: 510px;
+      height: 95%;
+      object-fit: contain;
+    }
+  }
+
+  &__text {
+    width: 50vw;
+    padding: 30px 90px 30px 90px;
+  }
+
+}
+
+.first-screen {
+
+  .h1 {
+    font-size: 60px;
+    margin-bottom: 110px;
+  }
+
+  &__desc {
+    max-width: 550px;
+  }
+
+}
+
+
+
+// Buttons
 .button--black {
   display: flex;
   align-items: center;
@@ -228,117 +403,13 @@ a, p {
 
 }
 
-.header {
-  position: absolute;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100vw;
-  height: 70px;
-  padding: 0 60px;
-  margin-top: 35px;
-
-  &__logo {
-    width: 100%;
-    max-width: 255px;
-    height: 72px;
-    background: url("~@/img/logo.svg") no-repeat 50% 50%/100%;
-  }
-
-  &__social {
-    align-items: center;
-    display: flex;
-    height: 100%;
-
-    .icon {
-      display: block;
-      width: 40px;
-      height: 40px;
-
-      &:not(:last-child) {
-        margin-right: 10px;
-      }
-
-      &-ins {
-        background: url("~@/img/icons/instgram.svg") no-repeat 50% 50%/100%;
-      }
-
-      &-youtube {
-        background: url("~@/img/icons/youtube.svg") no-repeat 50% 50%/100%;
-      }
-
-      &-vk {
-        background: url("~@/img/icons/vk.svg") no-repeat 50% 50%/100%;
-      }
-
-      &-facebook {
-        background: url("~@/img/icons/fecebook.svg") no-repeat 50% 50%/100%;
-      }
-    }
-  }
-}
 
 .main-content {
   padding-top: 105px;
 }
 
 
-.h1 {
-  font-size: 70px;
-  margin-bottom: 110px;
-}
 
-.section {
-  display: flex;
-  position: relative;
-
-  /*  &::after {
-      content: '';
-      position: absolute;
-      top: 40%;
-      left: 0;
-      width: 450px;
-      height: 300px;
-      background: #9c8fe0;
-      border-radius: 50% 25% 15% 25%;
-      filter: blur(55px);
-      z-index: -1;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 15%;
-      left: 0;
-      width: 250px;
-      height: 250px;
-      background: pink;
-      border-radius: 50% 25% 15% 25%;
-      filter: blur(55px);
-      z-index: -1;
-    }*/
-
-  &-picture {
-    width: 40vw;
-    display: none;
-  }
-
-  &-text {
-    width: 60vw;
-    padding-top: 30px;
-    padding-right: 90px;
-    padding: 50px;
-  }
-
-}
-
-
-.first-screen {
-  &__desc {
-    max-width: 550px;
-  }
-}
 
 
 .table {
@@ -356,4 +427,25 @@ a, p {
   height: 45%;
   margin: 0 auto;
   object-fit: contain;
+}
+
+.section-title span {
+  position: relative;
+  font-size: 14px;
+  display: block;
+  font-style: italic;
+  font-weight: 100;
+  color: blue;
+
+  &::before {
+    content: 'Выбран:';
+    margin-right: 5px;
+  }
+
+  &::after {
+    content: '(Нужно заполнить в json)';
+    margin-left: 5px;
+    font-size: 12px;
+    color: red;
+  }
 }

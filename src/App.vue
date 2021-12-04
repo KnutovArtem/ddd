@@ -1,22 +1,4 @@
 <template>
-  <div class='info' hidden>
-    <p>Шаг: <span>{{ this.step }}</span></p>
-    <p>Категоря: <span>{{
-        this.category_id === 0 ? "Хочу машину" : this.category_id === 1 ? "Куплю квартиру" : this.category_id === 2 ? "Закрыть все кредиты" : this.category_id === 3 ? "Открою своё дело" : this.category_id === 4 ? "Просто деньги" : null
-                       }} [{{ this.category_id }}]
-      </span>
-    </p>
-    <p>Сумма: <span :class='{blue : this.amount === 3}'>{{
-        this.amount === 0 ? "до 500" : this.amount === 1 ? "до 1 млн" : this.amount === 2 ? "до 3 млн" : this.amount === 3 ? "более 3 млн" : null
-                                                        }} [{{ this.amount }}]
-      </span>
-    </p>
-    <p>Способ оплаты: <span>{{
-        this.purchase_method === 0 ? "Кредит" : this.purchase_method === 1 ? "Лизинг" : this.purchase_method === 2 ? "Откладывать от з.п." : null
-                            }} [{{ this.purchase_method }}]
-      </span>
-    </p>
-  </div>
   <main class='main'>
 
     <Header/>
@@ -26,20 +8,22 @@
       <!--Start-->
       <div class='section first-screen' v-if='start'>
 
-        <picture class='section-picture monetca'>
+        <picture class='section__picture'>
           <!--<source :srcset='require(`@/img/questions/${questions[typeName].resultImg}.webp`)' type='image/webp'>-->
           <img class='img' :src='require(`@/img/monetca_1.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
 
-        <div class='section-text'>
-          <div class='first-screen__title'>
-            <h1 class='h1'>ЧТО ДЕЛАТЬ ЕСЛИ НУЖЕН МИЛЛИОН</h1>
+        <div class='section__text'>
+          <div class='first-screen__heading'>
+            <p class='h1'>ЧТО ДЕЛАТЬ ЕСЛИ НУЖЕН МИЛЛИОН</p>
           </div>
           <p class='first-screen__desc'>
             Предлагаю тебе сыграть в игру и выяснить, как выгоднее всего совершать крупные покупки. Выбирай варианты и задавай вопросы. Вместе мы найдём способ решить твои финансовые задачи эффективно, быстро и выгодно.
           </p>
           <button class='button--black' @click='start=false'>Начать</button>
         </div>
+
+        <div class='background'></div>
 
       </div>
 
@@ -52,7 +36,7 @@
         </picture>
 
         <div class='section-text'>
-          <p class='section-title' v-html='title'/>
+          <p class='section-heading' v-html='this.heading'/>
           <div class='buttons'>
             <button class='button--white'
                     v-for='(category_name, id) in data[this.buttons]' :key='id'
@@ -74,10 +58,10 @@
         </picture>
 
         <div class='section-text'>
-          <p class='section-title' v-html='title'/>
+          <p class='section-heading' v-html='heading'/>
           <div class='buttons'>
             <button class='button--white'
-                    v-for='(category_name, id) in data[this.buttons]' :key='id'
+                    v-for='(category_name, id) in data["branches"][this.category_id][this.buttons]' :key='id'
                     :class='{active: button_active === category_name}'
                     @click='renderButtons(2, id, category_name);'
                     v-html='category_name'/>
@@ -97,10 +81,10 @@
         </picture>
 
         <div class='section-text'>
-          <p class='section-title' v-html='title'/>
+          <p class='section-heading' v-html='heading'/>
           <div class='buttons'>
             <button class='button--white'
-                    v-for='(category_name, id) in data[this.buttons]' :key='id'
+                    v-for='(category_name, id) in data["branches"][this.category_id][this.buttons]' :key='id'
                     :class='{active: button_active === category_name}'
                     @click='renderButtons(3, id, category_name);'
                     v-html='category_name'/>
@@ -120,7 +104,7 @@
         </picture>
 
         <div class='section-text'>
-          <p class='section-title' v-html='this.your_choice_title'/>
+          <p class='section-heading' v-html='this.your_choice_heading'/>
 
           <div class='section-desc'>
             <p v-for='desc in this.your_choice_desc' :key='desc' v-html='desc'/>
@@ -141,7 +125,7 @@
         </picture>
 
         <div class='section-text'>
-          <p class='section-title' v-html='this.test_question'/>
+          <p class='section-heading' v-html='this.test_question'/>
           <div class='section-buttons'>
             <button class='button--answer'
                     v-for='(button_answer, index) in this.test_buttons' :key='index'
@@ -173,7 +157,7 @@
         <div class='section-text'>
           <div class='table-credits'>
             <p class='table'></p>
-            <p class='section-title'> Ну что, убедили? </p>
+            <p class='section-heading'> Ну что, убедили? </p>
             <div class='buttons' v-if='this.amount !== 3'> <!--todo: удалить лишнее-->
               <button class='button--black' @click='finalStep(0)'> Хочу автокредит</button>
               <button class='button--white' @click='finalStep(1)'> Хочу потребительский</button>
@@ -198,7 +182,7 @@
         </picture>
 
         <div class='section-text'>
-          <h1>{{ this.result["title"] }}</h1>
+          <h1>{{ this.result["heading"] }}</h1>
           <div class='info-credits__desc'>
             <p v-for='desc in this.result["desc"]' :key='desc' v-html='desc'/>
           </div>
@@ -324,8 +308,8 @@ export default {
       start: true,
       next: false,
       step: 0,
-      title: "",
-      your_choice_title: "",
+      heading: "",
+      your_choice_heading: "",
       your_choice_desc: "",
       your_choice_button: "",
       category_id: 0,
@@ -360,6 +344,9 @@ export default {
   },
 
   methods: {
+    //categories_name
+    //variants_buttons
+
     finalStep(type_credit) {
       this.step               = 7;
       this.result_type_credit = type_credit;
@@ -381,24 +368,24 @@ export default {
         this.test_desc = 'desc';
       }
 
-      this.all_qestions = data['categories'][this.purchase_method][this.test_version];
-      this.result       = data["result"][this.result_type_credit];
-      this.title        = data['titles'][this.step];
+      this.all_qestions = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version];
+      this.result       = data["branches"][this.category_id]["result"][this.result_type_credit];
+      this.heading        = data["branches"][this.category_id]['headings'][this.step];
 
       /*твой выбор*/
-      this.your_choice_title  = data['categories'][this.purchase_method]['title'];
-      this.your_choice_desc   = data['categories'][this.purchase_method][this.test_desc];
-      this.your_choice_button = data['categories'][this.purchase_method]['name_button'];
+      this.your_choice_heading  = data["branches"][this.category_id]['categories'][this.purchase_method]['heading'];
+      this.your_choice_desc   = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_desc];
+      this.your_choice_button = data["branches"][this.category_id]['categories'][this.purchase_method]['name_button'];
 
       /*тест*/
       if (this.purchase_method === 0) {
-        this.test_question = data['categories'][this.purchase_method][this.test_version][this.current_question]["question"];
-        this.current_question >= 0 ? this.test_buttons = data['categories'][this.purchase_method][this.test_version][this.current_question]['buttons'] : null;
+        this.test_question = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version][this.current_question]["question"];
+        this.current_question >= 0 ? this.test_buttons = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version][this.current_question]['buttons'] : null;
       }
-      this.step === 4 && this.next ? this.correct_answer_text = data["categories"][this.purchase_method][this.test_version][this.current_question]["answers"][this.correct_answer]["text"] : null;
+      this.step === 4 && this.next ? this.correct_answer_text = data["branches"][this.category_id]["categories"][this.purchase_method][this.test_version][this.current_question]["answers"][this.correct_answer]["text"] : null;
 
       /*Инфо. лизинг*/
-      this.leasing = data['categories'][this.purchase_method]['info'];
+      this.leasing = data["branches"][this.category_id]['categories'][this.purchase_method]['info'];
     },
     stepPrev: function () {
 
@@ -416,7 +403,6 @@ export default {
           this.step--;
           break;
       }
-      //this.step === 6 ? this.step = 4 : this.step === 7 ? this.step = 5 : this.step === 8 ? this.step = 6 : this.step--;
       this.buttons       = this.data["variants_buttons"][this.step];
       this.button_active = false;
       this.next          = false;
