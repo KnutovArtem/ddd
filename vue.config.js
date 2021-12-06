@@ -7,7 +7,7 @@ module.exports = {
         }
     },
     productionSourceMap: false,
-    publicPath: process.env.NODE_ENV === 'production' ? '/laroche/test/' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/tinkoff/tinkoff-loan-special-project/' : '/',
     css: {
         loaderOptions: {
             scss: {
