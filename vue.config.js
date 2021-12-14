@@ -12,8 +12,7 @@ module.exports = {
         loaderOptions: {
             scss: {
                 additionalData: `
-                @import "~@/styles/config/reset.scss";
-                @import "~@/styles/config/base.scss";
+                @import "~@/styles/reset.scss";
                 @import "~@/styles/main.scss";`,
             },
         },
