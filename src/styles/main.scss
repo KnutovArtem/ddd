@@ -73,6 +73,7 @@ a, p {
   width: 100%;
   height: 70px;
   margin-top: 35px;
+  z-index: 100;
 
   @media screen and (max-width: 992px) {
     height: 40px;
@@ -89,6 +90,7 @@ a, p {
     transform: translateY(-10px);
     animation: animation-icon\logo .25s ease forwards alternate;
     z-index: 10;
+    cursor: pointer;
 
     @media screen and (max-width: 1024px) {
       width: 230px;
@@ -104,19 +106,14 @@ a, p {
     height: 100%;
 
     .icon {
+      position: relative;
       display: block;
       width: 40px;
       height: 40px;
       opacity: 0;
       transform: translateY(-10px);
       animation: animation-icon\logo .25s ease forwards alternate;
-
-      &:hover {
-        box-shadow: 0 0 18px -1px rgba(0, 0, 0, .1);
-        transition: all .25s ease-in-out;
-        cursor: pointer;
-      }
-
+      cursor: pointer;
 
       @media screen and (max-width: 920px) {
         width: 28px;
@@ -283,6 +280,7 @@ a, p {
     align-items: center;
     justify-content: flex-end;
     width: 38vw;
+    max-width: 500px;
     height: 100%;
     transform: translate(-50px, 10%);
     opacity: 0;
@@ -292,8 +290,9 @@ a, p {
     .img {
       width: 100%;
       height: 100%;
-      min-width: 510px;
+      min-width: 550px;
       object-fit: contain;
+
     }
   }
 
@@ -420,7 +419,7 @@ a, p {
     max-width: 600px;
     margin-bottom: 30px;
     opacity: 0;
-    animation: animation-heading .25s ease forwards .25s;
+    animation: animation-heading .15s ease forwards .15s;
 
     @media screen and (max-width: 515px) {
       margin-bottom: 15px;
@@ -429,7 +428,7 @@ a, p {
 
   .section__desc {
     max-width: 95%;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 
     p {
       letter-spacing: -0.030rem;
@@ -485,25 +484,6 @@ a, p {
       }
     }
 
-    /* &.category_id_1 {
-
-       &.amount-0#step-4 {
-         display: flex;
-         flex-wrap: wrap;
-
-         button {
-           &:nth-of-type(-n+2) {
-             width: calc(50% - 7px);
-           }
-
-           &:last-child {
-             width: 100%;
-             margin-top: 15px;
-           }
-         }
-       }
-     }*/
-
     &#step-0 {
       .button--white {
         height: auto;
@@ -516,22 +496,6 @@ a, p {
         }
 
         &:nth-of-type(5) {
-          width: 100%;
-        }
-
-      }
-    }
-
-    &#step-2.cat_0,
-    &#step-2.cat_4 {
-      .button--white {
-
-        &:not(:last-child) {
-          width: calc(50% - 5px);
-          margin-bottom: 10px;
-        }
-
-        &:last-child {
           width: 100%;
         }
 
@@ -553,6 +517,23 @@ a, p {
       }
     }
 
+    &#step-1.cat_2,
+    &#step-1.cat_4,
+    &#step-2.cat_0,
+    &#step-2.cat_4 {
+      button {
+        &:nth-of-type(-n+2) {
+          max-width: 100%;
+          width: calc(50% - 7px);
+        }
+
+        &:not(:nth-of-type(-n+2)) {
+          width: 100%;
+          margin-top: 15px;
+        }
+      }
+    }
+
     &#step-4 {
       flex-wrap: nowrap;
 
@@ -560,7 +541,6 @@ a, p {
         width: calc(50% - 10px);
       }
     }
-
 
     &#step-5 {
       display: flex;
@@ -574,49 +554,92 @@ a, p {
           width: calc(50% - 10px);
         }
 
-        &:last-child {
+        &:not(:nth-of-type(-n+2)) {
           width: 100%;
           margin-top: 15px;
         }
       }
     }
 
+
     &#step-6 {
       display: flex;
       width: 100%;
-      max-width: 540px;
+      //max-width: 540px;
       margin-top: 50px;
+      //justify-content: flex-start;
+
+      //max-width: 100%;
+      justify-content: space-between;
 
       button {
         margin: 0;
 
+        &:nth-of-type(-n+2) {
+          max-width: 100%;
+          width: calc(50% - 7px);
+        }
+
+        &:not(:nth-of-type(-n+2)) {
+          width: 100%;
+          margin-top: 15px;
+        }
+      }
+
+      /*button {
+        margin: 0;
+
         &:nth-of-type(1) {
-          max-width: 215px;
+          max-width: 235px;
+          margin-right: 10px;
         }
 
         &:nth-of-type(2) {
           max-width: 305px;
         }
 
-      }
+      }*/
 
       &_false {
         margin-top: 50px;
 
         button {
-          &:not(:last-child) {
+
+          &:nth-of-type(-n+2) {
             width: calc(50% - 5px);
             margin-bottom: 10px;
           }
 
-          &:last-child {
+          &:not(:nth-of-type(-n+2)) {
             width: 100%;
           }
         }
       }
     }
 
+    /*&#step-6.cat_0,
+    &#step-6.cat_1,
+    &#step-6.cat_2,
+    &#step-6.cat_3,
+    &#step-6.cat_4 {
+      max-width: 100%;
+      justify-content: space-between;
+
+      button {
+        &:nth-of-type(-n+2) {
+          max-width: 100%;
+          width: calc(50% - 7px);
+        }
+
+        &:not(:nth-of-type(-n+2)) {
+          width: 100%;
+          margin-top: 15px;
+        }
+      }
+    }*/
+
     &#step-7 {
+      justify-content: space-between;
 
       @media screen and (max-width: 515px) {
         display: flex;
@@ -624,6 +647,8 @@ a, p {
       }
 
       button {
+        width: calc(50% - 7px);
+
         @media screen and (max-width: 515px) {
           width: 225px;
         }
@@ -653,27 +678,31 @@ a, p {
     .button--white {
       opacity: 0;
       transform: translateY(-55px);
-      animation: animation-icon\logo .25s ease forwards alternate;
+      animation: animation-icon\logo .15s ease forwards alternate;
 
       &:nth-of-type(1) {
-        animation-delay: .25s;
+        animation-delay: .10s;
       }
 
       &:nth-of-type(2) {
-        animation-delay: .35s;
+        animation-delay: .15s;
       }
 
       &:nth-of-type(3) {
-        animation-delay: .45s;
+        animation-delay: .20s;
       }
 
       &:nth-of-type(4) {
-        animation-delay: .55s;
+        animation-delay: .25s;
       }
 
       &:nth-of-type(5) {
-        animation-delay: .65s;
+        animation-delay: .30s;
       }
+    }
+
+    button.error {
+      box-shadow: 0 0 18px 1px rgba(248, 228, 41, .3);
     }
 
   }
@@ -709,6 +738,7 @@ a, p {
 
   .section__picture {
     width: 34vw;
+    max-width: 390px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -1009,10 +1039,10 @@ a, p {
 
   &__button {
     min-width: 215px;
-    @media screen and (min-width: 1081px) {
-      transform: translateX(70px);
+    margin-left: 70px;
+    @media screen and (max-width: 1080px) {
+      margin-left: 0;
     }
-
     @media screen and (max-width: 425px) {
       min-width: 130px;
     }
@@ -1052,6 +1082,7 @@ a, p {
   }
 
   .button--answer {
+
     &.true {
       background: #55DE6B;
       color: white;
@@ -1069,11 +1100,14 @@ a, p {
     border: 1px solid white;
     border-radius: 15px;
     margin-bottom: 25px;
+    height: max-content;
     max-height: 0;
     overflow: hidden;
+    display: block;
 
-    animation: animationName 2s ease forwards alternate;
-    @keyframes animationName {
+
+    animation: answer-text 1s ease forwards alternate;
+    @keyframes answer-text {
       0% {
         max-height: 0;
       }
@@ -1081,7 +1115,6 @@ a, p {
         max-height: 5000px;
       }
     }
-
 
     p {
       font-size: 12px;
@@ -1129,8 +1162,6 @@ a, p {
 
   .section__picture {
     width: 48vw;
-    transform: translate(3%, 5%) !important;
-
     @media screen and (max-width: 870px) {
       display: none;
     }
@@ -1282,8 +1313,8 @@ a, p {
   color: #fff;
   opacity: 0;
   transform: translateY(15px);
-  animation: animationName .45s ease .45s forwards;
-  @keyframes animationName {
+  animation: button--black .45s ease .45s forwards;
+  @keyframes button--black {
     0% {
       opacity: 0;
       transform: translateY(15px);
@@ -1322,10 +1353,16 @@ a, p {
   color: #000;
   border: 1px solid white;
 
+  &:hover {
+    background: $color--accent;
+    transition: all .25s ease-in-out;
+    cursor: pointer;
+    color: #000;
+  }
+
   @media screen and (max-width: 1080px) {
     min-height: 50px;
   }
-
   @media screen and (max-width: 425px) {
     min-height: 40px;
     font-size: 10px;
@@ -1344,11 +1381,33 @@ a, p {
   border-radius: 5px;
   color: #000;
   font-size: 16px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: button--bd .45s ease .48s forwards;
+  @keyframes button--bd {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    70% {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &:hover {
+    background: #000;
+    color: white;
+    cursor: pointer;
+  }
 
   @media screen and (max-width: 1080px) {
     height: 50px;
   }
-
   @media screen and (max-width: 515px) {
     height: 40px;
     font-size: 10px;
@@ -1378,7 +1437,6 @@ a, p {
   @media screen and (max-width: 1080px) {
     min-height: 50px;
   }
-
   @media screen and (max-width: 515px) {
     min-height: 40px;
     font-size: 12px;
@@ -1538,8 +1596,9 @@ a, p {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 325px;
+  width: max-content;
   height: 65px;
+  padding: 0 5px;
   border-radius: 58px;
   background: #fafafa;
   border: 1px solid white;
