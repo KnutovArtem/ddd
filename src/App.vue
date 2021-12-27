@@ -1,6 +1,21 @@
 <template>
   <main class='main'>
 
+    <div style='padding: 0 20px; position:absolute;' v-if='false'>
+      <p>
+        пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> шаг - {{ this.step }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> категория (category_id) - {{ this.category_id }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> цена (amount) {{ this.amount }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> лизинг или (purchase_method) {{ this.purchase_method }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текущий вопрос (current_question) {{ this.current_question }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текст (this.text_info) {{ this.text_info }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_2) {{ this.info_end_2 }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_3) {{ this.info_end_3 }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b>
+      </p>
+    </div>
+
     <button class='button--go'
             :class='{right: this.step === 6 || this.step === 4 || this.step === 3}'
             v-if='this.step === 6 || this.step === 3 || this.step === 4 && this.purchase_method === 0'
@@ -38,9 +53,7 @@
 
       </div>
 
-      <div class='section'
-           v-if='!this.start && this.step === 0'
-           :data-category='this.category_id'>
+      <div class='section' v-if='!this.start && this.step === 0' :data-category='this.category_id'>
 
         <picture class='section__picture'
                  :class="'pic_' + this.purchase_method"
@@ -74,7 +87,7 @@
           <img class='img' :src='require(`@/img/section/monetka-auto.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
         <picture class='section__picture' v-if='this.category_id === 1'>
-          <!--          <source :srcset='require(`@/img/section/monetka-home.webp`)' type='image/webp'>-->
+          <source :srcset='require(`@/img/section/monetka-home.png`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/monetka-home.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
         <picture class='section__picture' v-if='this.category_id === 3'>
@@ -115,7 +128,7 @@
       <div class='section' id='purchase-method' v-if='this.step === 2'>
 
         <picture class='section__picture'>
-          <!--<source :srcset='require(`@/img/questions/${questions[typeName].resultImg}.webp`)' type='image/webp'>-->
+          <source :srcset='require(`@/img/section/monetka__purchase-method.webp`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/monetka__purchase-method.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
 
@@ -162,7 +175,6 @@
             <p v-for='desc in this.your_choice_desc' :key='desc' v-html='desc'/>
           </div>
 
-          <!--          <button class='button&#45;&#45;black' @click='this.next=false; this.step++;' v-html='this.your_choice_button'/>-->
           <button class='button--black'
                   @click='choice()'
                   v-html='this.your_choice_button'/>
@@ -301,8 +313,6 @@
         </picture>
 
         <div class='section__text'>
-
-          <!-- пушка -->
           <div class='section__text__text-content' v-if='!this.info_end_2 && this.amount !== 3'>
             <p v-for='text in this.text_info_end["text"]' :key='text' v-html='text'/>
           </div>
@@ -316,7 +326,6 @@
             <p v-for='text in this.text_info_end_2["text"]' :key='text' v-html='text'/>
           </div>
 
-          <!-- пушка -->
           <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`'
                v-if='!this.info_end_2'>
             <button class='button--bd'
@@ -417,15 +426,11 @@
           <img class='img' :src='require(`@/img/section/monetka-result.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
 
-        <!-- 10 0 0 1 0 1 true false -->
         <div class='section__text' :class="'text_' + this.step">
           <h2 class='section__heading' v-if='this.category_id === 0'>Рассчитать автокредит</h2>
           <h2 class='section__heading' v-else>Оформить кредит</h2>
           <div class='iframe'>
-            <iframe width='660'
-                    height='630'
-                    frameborder='0'
-                    src='https://www.tinkoff.ru/loans/cash-loan/realty/?dco_ic=5ff4be08-55d8-11ec-8000-000061f0cab5'>
+            <iframe width='660' height='630' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/?dco_ic=5ff4be08-55d8-11ec-8000-000061f0cab5'>
             </iframe>
           </div>
         </div>
@@ -516,7 +521,6 @@ export default {
     },
 
     getData(data) {
-
       if (this.amount === 3) {
         this.test_version = 'test_2';
         this.purchase_method !== 2 ? this.test_desc = 'desc_2' : this.test_desc = 'desc';
@@ -526,26 +530,18 @@ export default {
         this.test_desc    = 'desc';
         this.all_qestions = data["branches"][this.category_id]['categories'][this.purchase_method]['test'];
       }
-
-      this.result  = data["branches"][this.category_id]["result"][this.result_type_credit];
-      this.heading = data["branches"][this.category_id]['headings'][this.step];
-
-      /*твой выбор*/
+      this.result              = data["branches"][this.category_id]["result"][this.result_type_credit];
+      this.heading             = data["branches"][this.category_id]['headings'][this.step];
       this.your_choice_heading = data["branches"][this.category_id]['categories'][this.purchase_method]['heading'];
       this.your_choice_desc    = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_desc];
       this.your_choice_button  = data["branches"][this.category_id]['categories'][this.purchase_method]['name_button'];
-
-      /*тест*/
       if (this.purchase_method === 0) {
         this.test_question = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version][this.current_question]["question"];
         this.current_question >= 0 ? this.test_buttons = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version][this.current_question]['buttons'] : null;
       }
-
       if (this.step === 4 && this.next) {
         this.correct_answer_text = data["branches"][this.category_id]['categories'][this.purchase_method][this.test_version][this.current_question]["answers"][this.correct_answer]["text"];
       }
-
-      /*Инфо. лизинг*/
       this.leasing         = data["branches"][this.category_id]['categories'][this.purchase_method]['info'];
       this.text_info_end   = data["branches"][this.category_id]['categories'][this.purchase_method]['info-end'];
       this.text_info_end_2 = data["branches"][this.category_id]['categories'][this.purchase_method]['info-end-2'];
@@ -553,7 +549,6 @@ export default {
     },
 
     stepPrev: function () {
-
       this.show_button = false;
       this.step_prev === this.step ? this.step_prev = this.step_prev_2 : null
 
@@ -582,7 +577,6 @@ export default {
           }
           break;
         case 5:
-
           if (this.info_end_2 && this.purchase_method !== 0) {
             if (this.category_id === 0) {
               this.step       = 6;
@@ -601,10 +595,8 @@ export default {
               this.step = this.step_prev;
             }
           }
-
           break;
         case 6:
-
           if (this.info_end_2) {
             this.info_end_2 = false;
           } else {
@@ -614,14 +606,17 @@ export default {
             } else {
               if (this.text_info === 2) {
                 this.text_info = 2;
-                this.step      = this.step_prev;
+                if (this.purchase_method === 1) {
+                  this.step = 4
+                } else {
+                  this.step = this.step_prev;
+                }
               } else {
                 this.step      = 4;
                 this.text_info = 1;
               }
             }
           }
-
           break;
         case 7:
           if (this.info_end_2 && this.purchase_method !== 0) {
@@ -644,7 +639,6 @@ export default {
           } else {
             this.step = this.step_prev;
           }
-
           break;
         case 8:
           if (this.amount === 0) {
