@@ -1,19 +1,5 @@
 <template>
   <main class='main'>
-    <div style='padding: 0 20px; position:absolute;' hidden>
-      <p>
-        пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> шаг - {{ this.step }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> категория (category_id) - {{ this.category_id }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> цена (amount) {{ this.amount }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> лизинг или (purchase_method) {{ this.purchase_method }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текущий вопрос (current_question) {{ this.current_question }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текст (this.text_info) {{ this.text_info }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_2) {{ this.info_end_2 }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_3) {{ this.info_end_3 }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b>
-      </p>
-    </div>
 
     <button class='button--go'
             :class='{right: this.step === 6 || this.step === 4 || this.step === 3}'
@@ -52,7 +38,6 @@
 
       </div>
 
-      <!--Выбор категории-->
       <div class='section'
            v-if='!this.start && this.step === 0'
            :data-category='this.category_id'>
@@ -82,7 +67,6 @@
 
       </div>
 
-      <!--Выбор суммы-->
       <div class='section' v-if='this.step === 1'>
 
         <picture class='section__picture' v-if='this.category_id === 0'>
@@ -128,7 +112,6 @@
 
       </div>
 
-      <!--Способ покупки-->
       <div class='section' id='purchase-method' v-if='this.step === 2'>
 
         <picture class='section__picture'>
@@ -155,7 +138,6 @@
 
       </div>
 
-      <!--Твой выбор ...-->
       <div class='section' :id='`cat_id_${this.category_id}`' v-if='this.step === 3'>
 
         <picture class='section__picture'
@@ -193,7 +175,6 @@
 
       </div>
 
-      <!--Тест-->
       <div class='section' id='test' v-if='this.step === 4 && this.purchase_method === 0'>
         <picture class='section__picture'
                  v-if='this.test_question === `Если ты вовремя не заплатишь, <br> наложим суровые санкции`'>
@@ -246,7 +227,6 @@
 
       </div>
 
-      <!--Лизинг | ..немного от зарплаты -->
       <div class='section' v-if='this.step === 4 && this.purchase_method !== 0'>
 
         <picture class='section__picture'>
@@ -277,7 +257,6 @@
 
       </div>
 
-      <!--Ну что, убедил?-->
       <div class='section' id='table' v-if='this.step === 5'>
 
         <picture class='section__picture'>
@@ -312,7 +291,6 @@
         </div>
       </div>
 
-      <!--Лизинг | ..немного от зарплаты - общий -->
       <div class='section' v-if='this.step === 6'>
 
         <picture class='section__picture'
@@ -377,7 +355,6 @@
 
       </div>
 
-      <!--Какой кредит выбран-->
       <div class='section' id='type-credit' v-if='this.step === 7'>
 
         <picture class='section__picture'
@@ -407,7 +384,6 @@
 
       </div>
 
-      <!--Тут надо хорошенько подумать... -->
       <div class='section' v-if='this.step === 8'>
 
         <picture class='section__picture'>
@@ -434,7 +410,6 @@
 
       </div>
 
-      <!--Finish... -->
       <div class='section' id='result' v-if='this.step === 10'>
 
         <picture class='section__picture'>
@@ -527,7 +502,6 @@ export default {
   methods: {
 
     finalStep(type_credit) {
-      console.log('type_credit', type_credit);
       this.step_prev          = this.step;
       this.step               = 7;
       this.result_type_credit = type_credit;
@@ -579,8 +553,6 @@ export default {
     },
 
     stepPrev: function () {
-      console.clear();
-      console.log('Step Prev');
 
       this.show_button = false;
       this.step_prev === this.step ? this.step_prev = this.step_prev_2 : null
@@ -591,10 +563,8 @@ export default {
         that.next          = false;
 
         if (that.info_end_2 && that.purchase_method !== 0) {
-          console.log('StepReset 1');
           that.info_end_2 = true;
         } else {
-          console.log('StepReset 2');
           that.info_end_2 = false;
         }
 
@@ -604,95 +574,58 @@ export default {
       }
 
       switch (this.step) {
-        case 4: // вопросы
+        case 4:
           if (this.text_info !== 0) {
-            console.log('Шаг 4');
             this.text_info--
           } else {
-            console.log('Шаг 4.1');
             this.step = this.step_prev;
           }
           break;
-        case 5: //Table. Таблица
-          console.log('Шаг 5');
+        case 5:
 
           if (this.info_end_2 && this.purchase_method !== 0) {
             if (this.category_id === 0) {
-              console.log('Шаг 5.1');
               this.step       = 6;
               this.info_end_2 = true;
               return
             } else {
-              console.log('Шаг 5.2');
               this.step       = 6;
               this.info_end_2 = true;
               return;
             }
           } else {
-            console.log('Шаг 5.3');
-            console.log('this.step_prev', this.step_prev);
             if (this.step_prev === 2) {
-              console.log('Шаг 5.3.1');
-              console.log('6 1 1 1 0 1 tr fl');
               this.step       = this.step_prev;
               this.info_end_2 = true;
             } else {
-              console.log('Шаг 5.3.2');
               this.step = this.step_prev;
             }
           }
 
           break;
         case 6:
-          console.log('Шаг 6');
 
           if (this.info_end_2) {
-            console.log('Шаг 6.1');
             this.info_end_2 = false;
           } else {
-            // Возврат с авто > не кредит >
             if (this.category_id === 0 && this.purchase_method !== 0) {
-              console.log('Шаг 6.2.1');
               this.step      = 4;
               this.text_info = 1;
             } else {
               if (this.text_info === 2) {
-                console.log('Шаг 6.2.2');
-
                 this.text_info = 2;
                 this.step      = this.step_prev;
               } else {
-                console.log('Шаг 6.2.3');
-                //this.text_info = 0;
-                //this.step      = this.step_prev;
-
                 this.step      = 4;
                 this.text_info = 1;
-
-
-
-                /*if (that.category_id !== 0 && that.step_prev === 3 && !that.info_end_2) {
-         console.log('StepReset 2.1');
-         console.log('that.step_prev', that.step_prev);
-         that.step      = 4;
-         that.text_info = 1;
-       }*/
-
-
-
-
               }
             }
           }
 
           break;
-        case 7: //Selected credit. Это какой выбран кредит
-          console.log('Шаг 7');
-
+        case 7:
           if (this.info_end_2 && this.purchase_method !== 0) {
             if (this.category_id === 0) {
-              console.log('Шаг 7.1');
-              console.log('this.step_prev', this.step_prev);
               if (this.step_prev === 8) {
                 this.step = 8;
               } else {
@@ -700,38 +633,28 @@ export default {
               }
               this.info_end_2 = true;
             } else {
-              // 7 1 1 1 0 1 tr fl
-              console.log('Шаг 7.2');
               if (this.step_prev === 5) {
-                console.log('Шаг 7.2.1');
                 this.step       = 5;
                 this.info_end_2 = true;
               } else {
-                console.log('Шаг 7.2.2');
                 this.step       = 6;
                 this.info_end_2 = true;
               }
             }
           } else {
-            console.log('Шаг 7.3');
             this.step = this.step_prev;
           }
 
           break;
         case 8:
-          console.log('Шаг 8');
           if (this.amount === 0) {
-            console.log('Шаг 8.1');
             if (this.category_id === 1 || this.category_id === 4) {
-              console.log('Шаг 8.1.1');
               this.step = 4;
             } else {
-              console.log('Шаг 8.1.2');
               this.info_end_2 = true;
               this.step       = 6;
             }
           } else {
-            console.log('Шаг 8.2');
             this.step = 6;
           }
           break;
@@ -769,9 +692,6 @@ export default {
     },
 
     getAnswer: function (button_answer) {
-      console.clear();
-      console.log('getAnswer');
-      console.log('');
 
       function resetAnswer(that) {
         that.next           = true;
@@ -789,22 +709,17 @@ export default {
       } else if (this.attempt < 1) {
         switch (button_answer) {
           case 0:
-            console.log('00');
             if (this.category_id !== 0) {
-              console.log('001');
               this.finalStep(2);
             } else {
               if (this.amount === 3) {
-                console.log('003');
                 this.finalStep(1);
               } else {
-                console.log('004');
                 this.finalStep(0);
               }
             }
             break;
           case 1:
-            console.log('11');
             resetAnswer(this);
             if (this.category_id !== 0) {
               this.finalStep(1)
@@ -813,7 +728,6 @@ export default {
             }
             break;
           case 2:
-            console.log('22');
             this.category_id !== 0 ? this.step = 5 : this.finalStep(8);
             break;
           default:
@@ -823,18 +737,16 @@ export default {
       }
 
       // More that one million
-      let stopTest = this.amount === 3 && this.current_question + 1 === this.all_qestions.length;
+      /*let stopTest = this.amount === 3 && this.current_question + 1 === this.all_qestions.length;
 
       // if button = true
       if (stopTest && button_answer === 0) {
-        console.log('1111122222');
-        //this.finalStep(2);
-      }
+        this.finalStep(2);
+      }*/
 
     },
 
     qestionNext: function () {
-      /*this.step_prev = this.step;*/
 
       if (this.next) {
         this.current_question++;
@@ -847,9 +759,6 @@ export default {
     },
 
     qestionPrev: function () {
-      console.clear();
-      console.log('qestionPrev');
-      console.log('');
 
       this.current_question === 0 ? this.step-- : null;
       this.current_question !== 0 ? this.current_question-- : null;
@@ -864,11 +773,6 @@ export default {
     },
 
     textInfoNext: function (next) {
-      console.log('-----------------');
-      console.log('textInfoNext');
-      console.info('text_info', this.text_info);
-      console.info('text_info.length', this.leasing.length);
-      console.log('-----------------');
 
       if (this.text_info < this.leasing.length - 1) {
         this.text_info++
@@ -877,18 +781,15 @@ export default {
 
           switch (next) {
             case 'finalStep_0':
-              console.log('1');
               this.finalStep(0);
               break;
             case 'finalStep_1':
-              console.log('2');
               this.finalStep(1);
               break;
             case 'finalStep_2':
               this.finalStep(2);
               break;
             case 'step-8':
-              console.log('3');
               this.category_id !== 0 ? this.step = 5 : this.step = 8;
               break;
             default:
@@ -907,8 +808,6 @@ export default {
 
     errorClass: function (btn) {
       this.error = !this.next;
-
-      console.log(btn);
 
       function animationMenuItem(from, to) {
         let i       = from;
