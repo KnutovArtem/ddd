@@ -3,6 +3,7 @@
 
     <div style='padding: 0 20px; position:absolute;' v-if='false'>
       <p>
+        <!--
         пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> шаг - {{ this.step }}
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> категория (category_id) - {{ this.category_id }}
@@ -12,6 +13,9 @@
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текст (this.text_info) {{ this.text_info }}
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_2) {{ this.info_end_2 }}
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_3) {{ this.info_end_3 }}
+        -->
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> heading -  {{ this.result ? this.result["heading"] : '' }}
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> type_credit -  {{ this.result_type_credit }}
         <b>&nbsp;&nbsp;&nbsp;&nbsp;</b>
       </p>
     </div>
@@ -52,7 +56,7 @@
         </div>
 
       </div>
-
+      <!--section - 1-->
       <div class='section' v-if='!this.start && this.step === 0' :data-category='this.category_id'>
 
         <picture class='section__picture'
@@ -79,7 +83,7 @@
         </div>
 
       </div>
-
+      <!--section - 2-->
       <div class='section' v-if='this.step === 1'>
 
         <picture class='section__picture' v-if='this.category_id === 0'>
@@ -124,7 +128,7 @@
         </div>
 
       </div>
-
+      <!--section - 3-->
       <div class='section' id='purchase-method' v-if='this.step === 2'>
 
         <picture class='section__picture'>
@@ -150,7 +154,7 @@
         </div>
 
       </div>
-
+      <!--section - 4-->
       <div class='section' :id='`cat_id_${this.category_id}`' v-if='this.step === 3'>
 
         <picture class='section__picture'
@@ -186,7 +190,7 @@
         </div>
 
       </div>
-
+      <!--section - 5-->
       <div class='section' id='test' v-if='this.step === 4 && this.purchase_method === 0'>
         <picture class='section__picture'
                  v-if='this.test_question === `Если ты вовремя не заплатишь, <br> наложим суровые санкции`'>
@@ -238,7 +242,7 @@
         </div>
 
       </div>
-
+      <!--section - 6-->
       <div class='section' v-if='this.step === 4 && this.purchase_method !== 0'>
 
         <picture class='section__picture'>
@@ -268,7 +272,7 @@
         </div>
 
       </div>
-
+      <!--section - 7-->
       <div class='section' id='table' v-if='this.step === 5'>
 
         <picture class='section__picture'>
@@ -302,7 +306,7 @@
           <div class='blur'></div>
         </div>
       </div>
-
+      <!--section - 8-->
       <div class='section' v-if='this.step === 6'>
 
         <picture class='section__picture'
@@ -363,7 +367,7 @@
         </div>
 
       </div>
-
+      <!--section - 9-->
       <div class='section' id='type-credit' v-if='this.step === 7'>
 
         <picture class='section__picture'
@@ -378,11 +382,12 @@
           <div class='section__desc'>
             <p v-for='desc in this.result["desc"]' :key='desc' v-html='desc'/>
           </div>
+            <p>{{this.result_type_credit }}</p> <br>
           <div class='section__buttons' :id="'step-' + this.step">
             <button class='button--bd'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
-                    @click='this.step = 10'
-                    v-html='button'/>
+                    @click='this.typeCredit(button); this.step = 10;'
+                    v-html="'--->  ' + button"/>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
@@ -392,7 +397,7 @@
         </div>
 
       </div>
-
+      <!--section - 10-->
       <div class='section' v-if='this.step === 8'>
 
         <picture class='section__picture'>
@@ -418,7 +423,7 @@
         </div>
 
       </div>
-
+      <!--section - 11-->
       <div class='section' id='result' v-if='this.step === 10'>
 
         <picture class='section__picture'>
@@ -427,11 +432,16 @@
         </picture>
 
         <div class='section__text' :class="'text_' + this.step">
-          <h2 class='section__heading' v-if='this.category_id === 0'>Рассчитать автокредит</h2>
-          <h2 class='section__heading' v-else>Оформить кредит</h2>
+          <h2 class='section__heading' v-if='this.result_type_credit === 0'>Рассчитать автокредит</h2>
+          <h2 class='section__heading' v-else>Оформить кредит </h2>
+          <p>---</p>
+          <b>{{ this.result["heading"] }}</b>
+          <b>{{ this.result_type_credit }}</b>
+          <p>---</p>
           <div class='iframe'>
-            <iframe width='660' height='630' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/?dco_ic=5ff4be08-55d8-11ec-8000-000061f0cab5'>
-            </iframe>
+            <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/'></iframe>
+            <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/'></iframe>
+            <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/'></iframe>
           </div>
         </div>
 
@@ -485,7 +495,7 @@ export default {
       answer_text:         false,
       show_button:         false,
       result:              [],
-      result_type_credit:  0,
+      result_type_credit:  "",
 
       // info lizing
       leasing:           [],
@@ -505,6 +515,21 @@ export default {
   },
 
   methods: {
+    typeCredit(type){
+      switch (type) {
+        case 'Оформить кредит':
+        case 'Оформить кредит под залог недвижимости':
+          this.finalStep(2);
+          break;
+        case 'Кредит без залога':
+        case 'Оформить потребительский кредит':
+          this.finalStep(1)
+          break;
+        default:
+          this.finalStep(0)
+          break;
+      }
+    },
 
     finalStep(type_credit) {
       this.step_prev          = this.step;
@@ -546,9 +571,11 @@ export default {
       this.text_info_end   = data["branches"][this.category_id]['categories'][this.purchase_method]['info-end'];
       this.text_info_end_2 = data["branches"][this.category_id]['categories'][this.purchase_method]['info-end-2'];
       this.text_info_end_3 = data["branches"][this.category_id]['categories'][this.purchase_method]['info-end-3'];
+
+      this.result ? this.result_type_credit = this.result["heading"] : null;
     },
 
-    stepPrev: function () {
+    stepPrev() {
       this.show_button = false;
       this.step_prev === this.step ? this.step_prev = this.step_prev_2 : null
 
@@ -661,7 +688,7 @@ export default {
 
     },
 
-    stepNext: function () {
+    stepNext() {
       this.step_prev_2 = this.step_prev;
       this.step_prev   = this.step;
 
@@ -671,7 +698,7 @@ export default {
       this.getData(this.data);
     },
 
-    renderButtons: function (type, id, category_name) {
+    renderButtons(type, id, category_name) {
 
       type === 1 ? this.category_id = id : null;
       type === 2 ? this.amount = id : null;
@@ -685,7 +712,7 @@ export default {
       this.getData(this.data);
     },
 
-    getAnswer: function (button_answer) {
+    getAnswer(button_answer) {
 
       function resetAnswer(that) {
         that.next           = true;
@@ -740,7 +767,7 @@ export default {
 
     },
 
-    qestionNext: function () {
+    qestionNext() {
 
       if (this.next) {
         this.current_question++;
@@ -752,7 +779,7 @@ export default {
       this.getData(this.data);
     },
 
-    qestionPrev: function () {
+    qestionPrev() {
 
       this.current_question === 0 ? this.step-- : null;
       this.current_question !== 0 ? this.current_question-- : null;
@@ -766,7 +793,7 @@ export default {
       this.getData(this.data);
     },
 
-    textInfoNext: function (next) {
+    textInfoNext(next) {
 
       if (this.text_info < this.leasing.length - 1) {
         this.text_info++
@@ -800,7 +827,7 @@ export default {
 
     },
 
-    errorClass: function (btn) {
+    errorClass(btn) {
       this.error = !this.next;
 
       function animationMenuItem(from, to) {
@@ -825,7 +852,7 @@ export default {
 
     },
 
-    choice: function () {
+    choice() {
       this.step_prev_2 = this.step_prev;
       this.step_prev   = this.step;
 
@@ -833,7 +860,7 @@ export default {
       this.step === 3 && this.category_id === 3 && this.purchase_method === 4 ? this.step = 6 : this.step++;
     },
 
-    showTable: function () {
+    showTable() {
       if (this.category_id === 0 && this.amount === 3 || this.category_id !== 0) {
         return "table-2"
       }

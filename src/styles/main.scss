@@ -616,27 +616,6 @@ a, p {
       }
     }
 
-    /*&#step-6.cat_0,
-    &#step-6.cat_1,
-    &#step-6.cat_2,
-    &#step-6.cat_3,
-    &#step-6.cat_4 {
-      max-width: 100%;
-      justify-content: space-between;
-
-      button {
-        &:nth-of-type(-n+2) {
-          max-width: 100%;
-          width: calc(50% - 7px);
-        }
-
-        &:not(:nth-of-type(-n+2)) {
-          width: 100%;
-          margin-top: 15px;
-        }
-      }
-    }*/
-
     &#step-7 {
       justify-content: space-between;
 
@@ -1170,9 +1149,10 @@ a, p {
   }
 
   .iframe {
-    width: 670px;
+    width: 800px;
     height: 490px;
     overflow: hidden;
+    background: white;
 
     @media screen and (max-width: 870px) {
       width: 100%;
@@ -1509,6 +1489,7 @@ a, p {
   border-radius: 150px;
   font-size: 14px;
   color: #000;
+  z-index: 10;
 
   @media screen and (max-width: 425px) {
     position: absolute;
