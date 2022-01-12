@@ -31,13 +31,17 @@ a, p {
   line-height: 1.8;
 }
 
-#app,
 .main {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  min-height: 738px;
+}
+
+.result {
+  overflow: visible;
+  padding-bottom: 30px;
+  height: 100%;
 }
 
 %container {
@@ -59,6 +63,7 @@ a, p {
 
 .main-content {
   @extend %container;
+  height: 100%;
 }
 
 .header {
@@ -164,17 +169,17 @@ a, p {
 .section {
   position: relative;
   display: flex;
-  height: 100vh;
+  height: 100%;
 
   .background {
-    width: 200px;
-    height: 200px;
     position: absolute;
-    top: 50%;
+    left: -60px;
+    width: 100vw;
+    height: 100vh;
 
     .blur {
       position: absolute;
-      top: 0;
+      bottom: 0;
       left: 10%;
       width: 415px;
       height: 200px;
@@ -183,77 +188,32 @@ a, p {
       filter: blur(120px);
       transform: rotate(21.91deg);
       z-index: -1;
-      animation: blur_0 8s ease-in infinite forwards alternate;
     }
 
     &::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: -50%;
+      bottom: 0;
+      left: 0;
       width: 260px;
       height: 260px;
       background: rgba(93, 49, 255, 0.7);
       filter: blur(150px);
       z-index: -1;
-      animation: blur_1 8s ease-in infinite forwards alternate;
     }
 
     &::before {
       content: '';
       position: absolute;
-      left: -50%;
+      left: 0;
       bottom: 0;
       border-radius: 50% 25% 15% 25%;
       width: 658.71px;
       height: 252.43px;
       background: #FFD262;
       filter: blur(120px);
-      transform: translateY(150%) rotate(-7.32deg);
+      transform: translateY(0%) rotate(-7.32deg);
       z-index: -1;
-      animation: blur_2 4s ease-in infinite forwards alternate;
-    }
-
-    @keyframes blur_0 {
-      0% {
-        transform: translate(-50%, -50%) rotate(10deg);
-      }
-      40% {
-        transform: translate(-20%, -25%) rotate(40deg);
-      }
-      60% {
-        transform: translate(-15%, 45%) rotate(10deg);
-      }
-      100% {
-        transform: translate(-5%, 15%) rotate(-10deg);
-      }
-    }
-
-    @keyframes blur_1 {
-      0% {
-        transform: translate(50%, 15%) rotate(10deg);
-      }
-      40% {
-        transform: translate(-20%, -50%) rotate(40deg);
-      }
-      60% {
-        transform: translate(-15%, 15%) rotate(10deg);
-      }
-      100% {
-        transform: translate(5%, 15%) rotate(-10deg);
-      }
-    }
-
-    @keyframes blur_2 {
-      0% {
-        transform: translate(120px, 110%);
-      }
-      40% {
-        transform: translate(40px, 150%);
-      }
-      100% {
-        transform: translate(140px, 170%);
-      }
     }
 
     &.section_3,
@@ -269,7 +229,7 @@ a, p {
 
       &::before {
         background: rgba(140, 255, 49, .5);
-        transform: translateX(-50%);
+        transform: translateX(0%);
       }
     }
 
@@ -1135,27 +1095,37 @@ a, p {
 #result {
 
   .section__picture {
-    width: 48vw;
-    @media screen and (max-width: 870px) {
+    width: 15vw;
+    min-width: 400px;
+    height: 100vh;
+
+    @media screen and (max-width: 1168px) {
       display: none;
     }
   }
 
   .section__text {
-    width: 55vw;
-    @media screen and (max-width: 870px) {
+    width: 45vw;
+    padding-top: 150px;
+    @media screen and (max-width: 1168px) {
       width: 100%;
+      max-width: 100%;
     }
   }
 
   .iframe {
-    width: 800px;
-    height: 490px;
-    overflow: hidden;
+    width: 55vw;
+    height: 900px;
     background: white;
+    border-radius: 10px;
+    overflow: hidden;
 
-    @media screen and (max-width: 870px) {
+    @media screen and (max-width: 1168px) {
       width: 100%;
+    }
+
+    iframe {
+      padding: 20px;
     }
   }
 }

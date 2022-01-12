@@ -1,5 +1,5 @@
 <template>
-  <main class='main'>
+  <main class='main' :class='{result: this.step === 10}'>
 
     <div style='padding: 0 20px; position:absolute;' v-if='false'>
       <p>
@@ -382,12 +382,12 @@
           <div class='section__desc'>
             <p v-for='desc in this.result["desc"]' :key='desc' v-html='desc'/>
           </div>
-            <p>{{this.result_type_credit }}</p> <br>
+
           <div class='section__buttons' :id="'step-' + this.step">
             <button class='button--bd'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
                     @click='this.typeCredit(button); this.step = 10;'
-                    v-html="'--->  ' + button"/>
+                    v-html="button"/>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
@@ -417,7 +417,6 @@
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
 
-
         <div class='background' :class="'section_' + this.step">
           <div class='blur'></div>
         </div>
@@ -434,10 +433,6 @@
         <div class='section__text' :class="'text_' + this.step">
           <h2 class='section__heading' v-if='this.result_type_credit === 0'>Рассчитать автокредит</h2>
           <h2 class='section__heading' v-else>Оформить кредит </h2>
-          <p>---</p>
-          <b>{{ this.result["heading"] }}</b>
-          <b>{{ this.result_type_credit }}</b>
-          <p>---</p>
           <div class='iframe'>
             <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/'></iframe>
             <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/'></iframe>
