@@ -2,22 +2,17 @@
   <main class='main' :class='{result: this.step === 10}'>
 
     <div style='padding: 0 20px; position:absolute;' v-if='false'>
-      <p>
-        <!--
         пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> шаг - {{ this.step }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> категория (category_id) - {{ this.category_id }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> цена (amount) {{ this.amount }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> лизинг или (purchase_method) {{ this.purchase_method }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текущий вопрос (current_question) {{ this.current_question }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> текст (this.text_info) {{ this.text_info }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_2) {{ this.info_end_2 }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> (this.info_end_3) {{ this.info_end_3 }}
-        -->
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> heading -  {{ this.result ? this.result["heading"] : '' }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b> type_credit -  {{ this.result_type_credit }}
-        <b>&nbsp;&nbsp;&nbsp;&nbsp;</b>
-      </p>
+        шаг - {{ this.step }}
+        категория (category_id) - {{ this.category_id }}
+        цена (amount) {{ this.amount }}
+        лизинг или (purchase_method) {{ this.purchase_method }}
+        текущий вопрос (current_question) {{ this.current_question }}
+        текст (this.text_info) {{ this.text_info }}
+        (this.info_end_2) {{ this.info_end_2 }}
+        (this.info_end_3) {{ this.info_end_3 }}
+        heading -  {{ this.result ? this.result["heading"] : '' }}
+        type_credit -  {{ this.result_type_credit }}
     </div>
 
     <button class='button--go'
@@ -48,7 +43,7 @@
           <p class='first-screen__desc'>
             Предлагаю тебе сыграть в&nbsp;игру и&nbsp;выяснить, как выгоднее всего совершать крупные покупки. Выбирай варианты и&nbsp;задавай вопросы. Вместе мы найдём способ решить твои финансовые задачи эффективно, быстро и&nbsp;выгодно.
           </p>
-          <button class='first-screen__button button--black' @click='start=false'>Начать</button>
+          <button class='first-screen__button button--black' @click='start=false' onclick="dataLayer.push({'event': 'knquiz_start'});">Начать</button>
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -72,10 +67,10 @@
             <button class='button--white'
                     v-for='(category_name, id) in data[this.buttons]' :key='id'
                     :class='{active: this.button_active === category_name}'
-                    @click='renderButtons(1, id, category_name);'
+                    @click='stepNext(); renderButtons(1, id, category_name);'
                     v-html='category_name'/>
           </div>
-          <button class='button--black' @click='errorClass(this.$refs.btns); stepNext();'>Далее</button>
+<!--          <button class='button&#45;&#45;black' @click='errorClass(this.$refs.btns); stepNext();'>Далее</button>-->
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -114,11 +109,11 @@
             <button class='button--white'
                     v-for='(category_name, id) in data["branches"][this.category_id][this.buttons]' :key='id'
                     :class='{active: button_active === category_name}'
-                    @click='renderButtons(2, id, category_name);'
+                    @click='stepNext(); renderButtons(2, id, category_name);'
                     v-html='category_name'/>
           </div>
 
-          <button class='button--black' @click='errorClass(this.$refs.btns2); stepNext();'>Далее</button>
+          <button class='button--black' v-if='false' @click='errorClass(this.$refs.btns2); stepNext();'>Далее</button>
           <button class='button--back' @click=stepPrev();>Назад</button>
 
         </div>
@@ -142,10 +137,10 @@
             <button class='button--white'
                     v-for='(category_name, id) in data["branches"][this.category_id][this.buttons]' :key='id'
                     :class='{active: button_active === category_name}'
-                    @click='renderButtons(3, id, category_name);'
+                    @click='stepNext(); renderButtons(3, id, category_name);'
                     v-html='category_name'/>
           </div>
-          <button class='button--black' @click='errorClass(this.$refs.btns3); stepNext()'>Далее</button>
+          <button class='button--black' v-if='false' @click='errorClass(this.$refs.btns3); stepNext()'>Далее</button>
           <button class='button--back' @click=stepPrev();> Назад</button>
         </div>
 
@@ -288,11 +283,11 @@
 
           <div v-if='this.category_id === 0 &&  this.amount !== 3' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id="`'step-${this.step}`">
             <button class='button--white-2' @click='finalStep(0)'> Хочу автокредит</button>
-            <button class='button--white-2' @click='finalStep(2)'> Хочу потребительский</button>
+            <button class='button--white-2' @click='finalStep(2)'> Нет, хочу потребительский</button>
           </div>
           <div v-else-if='this.category_id === 0 &&  this.amount === 3' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id="`'step-${this.step}`">
             <button class='button--white-2' @click='finalStep(1)'> Хочу кредит под залог недвижимости</button>
-            <button class='button--white-2' @click='finalStep(2)'> Хочу потребительский</button>
+            <button class='button--white-2' @click='finalStep(2)'> Нет, хочу потребительский</button>
           </div>
           <div v-if='this.category_id !== 0' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id='`step-${this.step}`'>
             <button class='button--white-2' @click='finalStep(2)'> Хочу кредит под залог недвижимости</button>
@@ -330,29 +325,31 @@
             <p v-for='text in this.text_info_end_2["text"]' :key='text' v-html='text'/>
           </div>
 
-          <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`'
-               v-if='!this.info_end_2'>
+          <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-if='!this.info_end_2 && this.amount !== 3'>
             <button class='button--bd'
                     v-for='btn in this.text_info_end["buttons"]' :key='btn'
                     @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
                     v-html='btn["name"]'/>
           </div>
-          <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`'
-               v-else-if='this.info_end_3'>
+          <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-else-if='!this.info_end_2 && this.amount === 3'>
+            <button class='button--bd'
+                    v-for='btn in this.text_info_end["buttons-2"]' :key='btn'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    v-html='btn["name"]'/>
+          </div>
+          <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`' v-else-if='this.info_end_3'>
             <button class='button--bd'
                     v-for='btn in this.text_info_end_3["buttons"]' :key='btn'
                     @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
                     v-html='btn["name"]'/>
           </div>
-          <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`'
-               v-else-if='this.info_end_2 && this.amount === 3'>
+          <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`' v-else-if='this.info_end_2 && this.amount === 3'>
             <button class='button--bd'
                     v-for='btn in this.text_info_end_2["buttons-2"]' :key='btn'
                     @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
                     v-html='btn["name"]'/>
           </div>
-          <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`'
-               v-else-if='this.info_end_2 && this.amount !== 3'>
+          <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-else-if='this.info_end_2 && this.amount !== 3'>
             <button class='button--bd'
                     v-for='btn in this.text_info_end_2["buttons"]' :key='btn'
                     @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
@@ -385,8 +382,22 @@
 
           <div class='section__buttons' :id="'step-' + this.step">
             <button class='button--bd'
+                    v-show='this.result["nameEvent"] === "knquiz_selectkn"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
                     @click='this.typeCredit(button); this.step = 10;'
+                    onclick="dataLayer.push({'event': 'knquiz_selectkn'});"
+                    v-html="button"/>
+            <button class='button--bd'
+                    v-show='this.result["nameEvent"] === "knquiz_selectknz"'
+                    v-for='(button, index) in this.result["buttons"]' :key='index'
+                    @click='this.typeCredit(button); this.step = 10;'
+                    onclick="dataLayer.push({'event': 'knquiz_selectknz'});"
+                    v-html="button"/>
+            <button class='button--bd'
+                    v-show='this.result["nameEvent"] === "knquiz_selectkna"'
+                    v-for='(button, index) in this.result["buttons"]' :key='index'
+                    @click='this.typeCredit(button); this.step = 10;'
+                    onclick="dataLayer.push({'event': 'knquiz_selectkna'});"
                     v-html="button"/>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
@@ -434,9 +445,9 @@
           <h2 class='section__heading' v-if='this.result_type_credit === 0'>Рассчитать автокредит</h2>
           <h2 class='section__heading' v-else>Оформить кредит </h2>
           <div class='iframe'>
-            <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/'></iframe>
-            <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/'></iframe>
-            <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/'></iframe>
+            <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+            <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+            <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
           </div>
         </div>
 
@@ -464,7 +475,7 @@ export default {
     return {
       data:                [],
       start:               true,
-      next:                false,
+      next:                true,
       step:                0,
       step_prev:           0,
       step_prev_2:         0,
@@ -510,6 +521,7 @@ export default {
   },
 
   methods: {
+
     typeCredit(type){
       switch (type) {
         case 'Оформить кредит':
