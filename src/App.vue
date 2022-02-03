@@ -464,9 +464,9 @@
           <div class='iframe'>
             <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
 
-            <iframe  v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+            <iframe  v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
 
-            <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+            <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
           </div>
 
           <div class='license_bank__block'>
