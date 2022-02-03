@@ -1,29 +1,27 @@
 <template>
   <main class='main' :class='{result: this.step === 10}'>
 
-    <div style='padding: 0 20px; position:absolute;' v-if='false'>
-        пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}
-        шаг - {{ this.step }}
-        категория (category_id) - {{ this.category_id }}
-        цена (amount) {{ this.amount }}
-        лизинг или (purchase_method) {{ this.purchase_method }}
-        текущий вопрос (current_question) {{ this.current_question }}
-        текст (this.text_info) {{ this.text_info }}
-        (this.info_end_2) {{ this.info_end_2 }}
-        (this.info_end_3) {{ this.info_end_3 }}
-        heading -  {{ this.result ? this.result["heading"] : '' }}
-        type_credit -  {{ this.result_type_credit }}
+    <div v-if='false' style='display: flex; justify-content:space-between; width: 100%; padding: 10px 20px 0 20px; position:absolute;' >
+      <p style='font-size: 10px;'>пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}</p>
+      <p style='font-size: 10px;'>шаг - {{ this.step }}</p>
+      <p style='font-size: 10px;'>категория (category_id) - {{ this.category_id }}</p>
+      <p style='font-size: 10px;'>цена (amount) {{ this.amount }}</p>
+      <p style='font-size: 10px;'>лизинг или (purchase_method) {{ this.purchase_method }}</p>
+      <p style='font-size: 10px;'>текущий вопрос (current_question) {{ this.current_question }}</p>
+      <p style='font-size: 10px;'>текст (this.text_info) {{ this.text_info }}</p>
+      <p style='font-size: 10px;'>(this.info_end_2) {{ this.info_end_2 }}</p>
+      <p style='font-size: 10px;'>(this.info_end_3) {{ this.info_end_3 }}</p>
+      <p style='font-size: 10px;'>heading - {{ this.result ? this.result["heading"] : '' }}</p>
+      <p style='font-size: 10px;'>type_credit - {{ this.result_type_credit }}</p>
     </div>
-
-    <button class='button--go'
-            :class='{right: this.step === 6 || this.step === 4 || this.step === 3}'
-            v-if='this.step === 6 || this.step === 3 || this.step === 4 && this.purchase_method === 0'
-            @click='this.finalStep(this.purchase_method_id)'>Хочу кредит
-    </button>
 
     <Header :step='this.step'/>
 
     <div class='main-content'>
+
+      <p class='license_bank' v-if='this.step !== 10'>
+        АО «Тинькофф Банк», лицензия ЦБ РФ № 2673
+      </p>
 
       <div class='section first-screen' v-if='start'>
 
@@ -43,7 +41,9 @@
           <p class='first-screen__desc'>
             Предлагаю тебе сыграть в&nbsp;игру и&nbsp;выяснить, как выгоднее всего совершать крупные покупки. Выбирай варианты и&nbsp;задавай вопросы. Вместе мы найдём способ решить твои финансовые задачи эффективно, быстро и&nbsp;выгодно.
           </p>
-          <button class='first-screen__button button--black' @click='start=false' onclick="dataLayer.push({'event': 'knquiz_start'});">Начать</button>
+          <button class='first-screen__button button--black'
+                  @click='start=false'
+                  onclick="dataLayer.push({'event': 'knquiz_start'});">Начать</button>
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -70,7 +70,7 @@
                     @click='stepNext(); renderButtons(1, id, category_name);'
                     v-html='category_name'/>
           </div>
-<!--          <button class='button&#45;&#45;black' @click='errorClass(this.$refs.btns); stepNext();'>Далее</button>-->
+          <!--<button class='button&#45;&#45;black' @click='errorClass(this.$refs.btns); stepNext();'>Далее</button>-->
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -174,9 +174,21 @@
             <p v-for='desc in this.your_choice_desc' :key='desc' v-html='desc'/>
           </div>
 
-          <button class='button--black'
-                  @click='choice()'
-                  v-html='this.your_choice_button'/>
+          <div class='buttons-container'>
+            <button class='button--black'
+                    @click='choice()' v-html='this.your_choice_button'/>
+            <!--Button "Рассчитать кредит"-->
+            <button v-if='this.purchase_method === 0' class='button--bd' @click='showButtonCredit("type_credit")' v-html='showButtonCredit("name_btn")'/>
+
+
+            <!--            <button class='button&#45;&#45;bd' v-if='this.purchase_method === 0 && this.amount === 0'
+                                @click='this.finalStep(0)'>
+                                Рассчитать автокредит </button>
+                        <button class='button&#45;&#45;bd' v-if='this.purchase_method === 0 && this.amount === 3'
+                                @click='this.finalStep(1)'>
+                          Рассчитать кредит под залог недвижимости</button>-->
+          </div>
+
           <button class='button--back' @click=stepPrev();> Назад</button>
         </div>
 
@@ -187,6 +199,7 @@
       </div>
       <!--section - 5-->
       <div class='section' id='test' v-if='this.step === 4 && this.purchase_method === 0'>
+
         <picture class='section__picture'
                  v-if='this.test_question === `Если ты вовремя не заплатишь, <br> наложим суровые санкции`'>
 
@@ -209,10 +222,11 @@
                    `${this.current_question === 5 && this.category_id !== 0 ? 'section__buttons__2': '' }`
                ]"
                :id="'step-' + this.step">
+
             <button v-for='(button_answer, index) in this.test_buttons' :key='index'
                     :class="[ activeClassButton(button_answer),
                               `${this.current_question === 5 && this.category_id !== 0 ? 'button--white-2': 'button--answer' }` ]"
-                    @click="getAnswer(button_answer['answer']);"
+                    @click="getAnswer(button_answer['answer'], button_answer['name']);"
                     v-html='button_answer["name"]'/>
           </div>
 
@@ -220,7 +234,7 @@
             <p v-for='text in this.correct_answer_text' :key='text' v-html='text'/>
           </div>
 
-          <button class='button--black' v-if='!show_button' @click='errorClass(this.$refs.btns4);  qestionNext();'>Далее</button>
+          <button class='button--black' v-if='!show_button && answer_text' @click='errorClass(this.$refs.btns4);  qestionNext();'>Далее</button>
           <button class='button--black' v-if='show_button' @click='stepNext();'>Давай сравним</button>
 
           <button class='button--back' @click='qestionPrev();'> Назад</button>
@@ -250,16 +264,16 @@
             <p v-for='desc in this.leasing[this.text_info]["desc"]' :key='desc' v-html='desc'/>
           </div>
           <div class='section__buttons' :id='`step-${this.step}`' v-if='Array.isArray(this.leasing[this.text_info]["button"])'>
-            <button class='button--black section-text__button' v-for='btn in this.leasing[this.text_info]["button"]' :key='btn'
-                    @click='textInfoNext();'
+            <button class='button--black section-text__button' ref='btn_anim' v-for='btn in this.leasing[this.text_info]["button"]' :key='btn'
+                    @click='animButton(); textInfoNext();'
                     v-html='btn'/>
           </div>
           <div class='section__buttons' :id='`step-${this.step}`' v-else>
-            <button class='button--black section-text__button'
-                    @click='textInfoNext();'
+            <button class='button--black section-text__button' ref='btn_anim'
+                    @click='animButton(); textInfoNext();'
                     v-html='this.leasing[this.text_info]["button"]'/>
           </div>
-          <button class='button--back' @click='stepPrev();'> Назад</button>
+          <button class='button--back' @click='stepPrev(); animButton()'> Назад</button>
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -269,12 +283,10 @@
       </div>
       <!--section - 7-->
       <div class='section' id='table' v-if='this.step === 5'>
-
         <picture class='section__picture'>
           <source :srcset='require(`@/img/section/monetka-test.webp`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/monetka-test.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
-
         <div class='section__text'>
 
           <div class='table' :class='showTable()'/>
@@ -282,21 +294,20 @@
           <p class='section__heading'> Ну что, убедили? </p>
 
           <div v-if='this.category_id === 0 &&  this.amount !== 3' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id="`'step-${this.step}`">
-            <button class='button--white-2' @click='finalStep(0)'> Хочу автокредит</button>
-            <button class='button--white-2' @click='finalStep(2)'> Нет, хочу потребительский</button>
+            <button class='button--black' @click='finalStep(0)'> Хочу автокредит</button>
+            <button class='button--black' @click='finalStep(2)'> Нет, хочу потребительский</button>
           </div>
           <div v-else-if='this.category_id === 0 &&  this.amount === 3' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id="`'step-${this.step}`">
-            <button class='button--white-2' @click='finalStep(1)'> Хочу кредит под залог недвижимости</button>
-            <button class='button--white-2' @click='finalStep(2)'> Нет, хочу потребительский</button>
+            <button class='button--black' @click='finalStep(1)'>Хочу кредит под залог недвижимости</button>
+            <button class='button--black' @click='finalStep(2)'>Нет, хочу потребительский</button>
           </div>
           <div v-if='this.category_id !== 0' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id='`step-${this.step}`'>
-            <button class='button--white-2' @click='finalStep(2)'> Хочу кредит под залог недвижимости</button>
+            <button class='button--black' @click='finalStep(1)'>Хочу кредит под залог недвижимости</button>
           </div>
 
           <button class='button--back' @click='this.show_button = false; stepPrev();'> Назад</button>
 
         </div>
-
         <div class='background' :class="'section_' + this.step">
           <div class='blur'></div>
         </div>
@@ -326,33 +337,33 @@
           </div>
 
           <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-if='!this.info_end_2 && this.amount !== 3'>
-            <button class='button--bd'
+            <button class='button--black'
                     v-for='btn in this.text_info_end["buttons"]' :key='btn'
-                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"], btn["name"]);'
                     v-html='btn["name"]'/>
           </div>
           <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-else-if='!this.info_end_2 && this.amount === 3'>
-            <button class='button--bd'
+            <button class='button--black'
                     v-for='btn in this.text_info_end["buttons-2"]' :key='btn'
-                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"], btn["name"]);'
                     v-html='btn["name"]'/>
           </div>
           <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`' v-else-if='this.info_end_3'>
-            <button class='button--bd'
+            <button class='button--black'
                     v-for='btn in this.text_info_end_3["buttons"]' :key='btn'
-                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"], btn["name"]);'
                     v-html='btn["name"]'/>
           </div>
           <div class='section__buttons' :id='`step-${this.step}`' :class='`cat_${this.category_id}`' v-else-if='this.info_end_2 && this.amount === 3'>
-            <button class='button--bd'
+            <button class='button--black'
                     v-for='btn in this.text_info_end_2["buttons-2"]' :key='btn'
-                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"], btn["name"]);'
                     v-html='btn["name"]'/>
           </div>
           <div class='section__buttons' :class='`cat_${this.category_id}`' :id='`step-${this.step}`' v-else-if='this.info_end_2 && this.amount !== 3'>
-            <button class='button--bd'
+            <button class='button--black'
                     v-for='btn in this.text_info_end_2["buttons"]' :key='btn'
-                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"]);'
+                    @click=' this.result_type_credit = 0; getData(this.data); textInfoNext(btn["next"], btn["name"]);'
                     v-html='btn["name"]'/>
           </div>
 
@@ -376,29 +387,32 @@
 
         <div class='section__text'>
           <h2 class='section__heading h2'>{{ this.result["heading"] }}</h2>
+
+          <!--todo: v-if="this.purchase_method === 0 (desc-2)" -->
           <div class='section__desc'>
             <p v-for='desc in this.result["desc"]' :key='desc' v-html='desc'/>
           </div>
 
           <div class='section__buttons' :id="'step-' + this.step">
-            <button class='button--bd'
+            <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectkn"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
-                    @click='this.typeCredit(button); this.step = 10;'
-                    onclick="dataLayer.push({'event': 'knquiz_selectkn'});"
-                    v-html="button"/>
-            <button class='button--bd'
+                    @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
+                    onclick="fbq('knquiz_selectkn'); VK.Retargeting.Event('knquiz_selectkn'); dataLayer.push({'event': 'knquiz_selectkn'});"
+                    v-html='button'/>
+            <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectknz"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
-                    @click='this.typeCredit(button); this.step = 10;'
-                    onclick="dataLayer.push({'event': 'knquiz_selectknz'});"
-                    v-html="button"/>
-            <button class='button--bd'
+                    @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
+                    onclick="fbq('knquiz_selectknz'); VK.Retargeting.Event('knquiz_selectknz'); dataLayer.push({'event': 'knquiz_selectknz'});"
+
+                    v-html='button'/>
+            <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectkna"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
-                    @click='this.typeCredit(button); this.step = 10;'
-                    onclick="dataLayer.push({'event': 'knquiz_selectkna'});"
-                    v-html="button"/>
+                    @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
+                    onclick="fbq('knquiz_selectkna'); VK.Retargeting.Event('knquiz_selectkna'); dataLayer.push({'event': 'knquiz_selectkna'});"
+                    v-html='button'/>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
@@ -417,13 +431,13 @@
         </picture>
 
         <div class='section__text'>
-          <p>Тут надо хорошенько подумать. Хотя и&nbsp;для такого случая у нас есть несколько предложений.</p>
+          <p>Тут надо хорошенько подумать. Хотя и&nbsp;для такого случая у&nbsp;нас есть несколько предложений.</p>
           <p>Ты можешь взять кредит без залога, но сумма будет не такой большой — до 2 млн рублей. Зато деньги можно получить в&nbsp;ближайшее время: заявку рассматриваем в&nbsp;тот же день, а&nbsp;карту с деньгами привозим на следующий. </p>
-          <p>Если нужна сумма побольше, выбирай кредит под залог недвижимости. А&nbsp;если у тебя нет своей, можно договориться с родственниками, чтобы разрешили оформить кредит под залог их квартиры. Квартира останется у них в&nbsp;собственности, а&nbsp;тебе могут одобрить сумму до 15 млн со ставкой от 8,9%. При этом никакой волокиты: для оформления потребуются только паспорт и&nbsp;СНИЛС. </p>
+          <p>Если нужна сумма побольше, выбирай кредит под залог недвижимости. А&nbsp;если у&nbsp;тебя нет своей, можно договориться с родственниками, чтобы разрешили оформить кредит под залог их квартиры. Квартира останется у&nbsp;них в&nbsp;собственности, а&nbsp;тебе могут одобрить сумму до 15 млн со ставкой от 8,9%. При этом никакой волокиты: для оформления потребуются только паспорт и&nbsp;СНИЛС. </p>
           <p>Оба варианта хороши. Выбирай тот, который больше подходит, и&nbsp;вперёд — к&nbsp;квартире своей мечты!</p>
           <div class='section__buttons' :id="'step-' + this.step">
-            <button class='button--bd' @click='this.finalStep(1)'>Оформить потребительский кредит</button>
-            <button class='button--bd' @click='this.finalStep(1)'>Оформить кредит с залогом</button>
+            <button class='button--black' @click='this.finalStep(1)'>Оформить потребительский кредит</button>
+            <button class='button--black' @click='this.finalStep(1)'>Оформить кредит с залогом</button>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
@@ -444,16 +458,41 @@
         <div class='section__text' :class="'text_' + this.step">
           <h2 class='section__heading' v-if='this.result_type_credit === 0'>Рассчитать автокредит</h2>
           <h2 class='section__heading' v-else>Оформить кредит </h2>
+
+          <p style='color: darkgrey;' v-if='false'>{{ this.result_type_credit }}</p> <!--todo:remove-->
+
           <div class='iframe'>
             <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
-            <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+
+            <iframe  v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+
             <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
           </div>
+
+          <div class='license_bank__block'>
+
+            <p>АО «Тинькофф Банк», лицензия ЦБ&nbsp;РФ&nbsp;№&nbsp;2673</p>
+            <p>Пример расчета условий по кредиту носит исключительно информационный характер и&nbsp;не является публичной офертой.</p>
+            <p>Сумма кредита, указанная в&nbsp;рекламном предложении, не является офертой. Банк определяет сумму кредита по результатам рассмотрения заявки. Процентная ставка, годовых:
+              <br>
+               1) базовая – от&nbsp;8,9% до&nbsp;30%;
+              <br>
+               2) при неучастии Клиента в&nbsp;«Программе страховой защиты заемщиков Банка 3.0» (Программа), если требуется кредитным договором – от 12,2% до 30%;
+              <br>
+               3) при прекращении Договора залога, невыдаче закладной либо признании ее недействительной, если нет обеспечения в&nbsp;виде залога недвижимости:
+              <br>
+               +5% процентных пунктов (п.п.) к ставке;
+              <br>
+               4) если не предоставлен договор страхования рисков утраты и&nbsp;повреждения Предмета залога: +0,5% п.п. к ставке. Плата за включение в&nbsp;Программу: 0,3% от Кредита в&nbsp;месяц. Кредит: до 15 млн ₽, срок от&nbsp;3 мес. до&nbsp;15 лет. Условия применимы к Тарифному плану КНЗ 3.15 (рубли РФ). Ставка и&nbsp;иные платежи, определяющие полную стоимость кредита, устанавливаются для каждого Клиента в&nbsp;индивидуальном порядке и&nbsp;указываются в&nbsp;индивидуальных условиях договора кредита под залог недвижимости. Банк вправе запросить иные документы у&nbsp;всех участников сделки. Кредит зачисляется на карту на след. день после регистрации ипотеки в&nbsp;Росреестре или ранее по решению Банка.`</p>
+
+          </div>
+
         </div>
 
         <div class='background' :class="'section_' + this.step">
           <div class='blur'></div>
         </div>
+
       </div>
 
     </div>
@@ -473,6 +512,7 @@ export default {
 
   data() {
     return {
+      production: false,
       data:                [],
       start:               true,
       next:                true,
@@ -520,17 +560,60 @@ export default {
     }
   },
 
-  methods: {
 
-    typeCredit(type){
+
+  methods: {
+    showButtonCredit(e) {
+
+      if (e === "name_btn") {
+        let name = "";
+
+        if (this.category_id === 0) {
+          this.amount === 3 ? name = "Рассчитать кредит под залог недвижимости" : name = "Рассчитать авто кредит";
+        } else {
+          this.amount === 0 ? name = `Рассчитать кредит под залог недвижимости до&nbsp;2&#8209;15&nbsp;млн` : name = "Рассчитать потребительский кредит- до 2 млн";
+        }
+
+        return name
+      }
+      if (e === "type_credit") {
+        if (this.category_id === 0) {
+          this.amount === 3 ? this.finalStep(1) : this.finalStep(0);
+        } else {
+          this.amount === 0 ? this.finalStep(2) : this.finalStep(1);
+        }
+      }
+
+    },
+    animButton() {
+      if (this.$refs.btn_anim) {
+        this.$refs.btn_anim.classList.add('anim');
+        setTimeout(() => {
+          this.$refs.btn_anim.classList.remove('anim');
+        }, 2000)
+      }
+    },
+
+    typeCredit(type, heading) {
       switch (type) {
-        case 'Оформить кредит':
+        case 'Рассчитать потребительский кредит':
+        case 'Хочу потребительский кредит':
         case 'Оформить кредит под залог недвижимости':
-          this.finalStep(2);
+          this.finalStep(2)
           break;
         case 'Кредит без залога':
         case 'Оформить потребительский кредит':
           this.finalStep(1)
+          break;
+        case 'Рассчитать кредит':
+          if (heading === "Кредит под залог недвижимости") {
+            this.finalStep(1)
+          }
+          break;
+        case 'Оформить кредит':
+          if (heading === "Кредит под залог недвижимости") {
+            this.finalStep(1)
+          }
           break;
         default:
           this.finalStep(0)
@@ -539,10 +622,10 @@ export default {
     },
 
     finalStep(type_credit) {
-      this.step_prev          = this.step;
-      this.step               = 7;
       this.result_type_credit = type_credit;
       this.getData(this.data);
+      this.step_prev          = this.step;
+      this.step               = 7;
     },
 
     activeClassButton(button_answer) {
@@ -589,7 +672,7 @@ export default {
       function resetStepPrev(that) {
         that.buttons       = that.data["variants_buttons"][that.step];
         that.button_active = false;
-        that.next          = false;
+        //that.next          = false;
 
         if (that.info_end_2 && that.purchase_method !== 0) {
           that.info_end_2 = true;
@@ -603,6 +686,7 @@ export default {
       }
 
       switch (this.step) {
+        case 3:
         case 4:
           if (this.text_info !== 0) {
             this.text_info--
@@ -701,7 +785,7 @@ export default {
 
       this.next ? this.step === 1 && this.category_id === 2 ? this.step = 3 : this.step++ : null;
       this.buttons = this.data["variants_buttons"][this.step];
-      this.next    = false;
+      //this.next    = false;
       this.getData(this.data);
     },
 
@@ -719,7 +803,7 @@ export default {
       this.getData(this.data);
     },
 
-    getAnswer(button_answer) {
+    getAnswer(button_answer, btn_name) {
 
       function resetAnswer(that) {
         that.next           = true;
@@ -735,10 +819,21 @@ export default {
           resetAnswer(this);
         }
       } else if (this.attempt < 1) {
+
         switch (button_answer) {
           case 0:
             if (this.category_id !== 0) {
-              this.finalStep(2);
+
+              switch (btn_name) {
+                case 'Рассчитать кредит':
+                case 'Хочу кредит под залог недвижимости':
+                  this.finalStep(1);
+                  break;
+                default:
+                  this.finalStep(2);
+                  break;
+              }
+
             } else {
               if (this.amount === 3) {
                 this.finalStep(1);
@@ -750,27 +845,38 @@ export default {
           case 1:
             resetAnswer(this);
             if (this.category_id !== 0) {
-              this.finalStep(1)
+              switch (btn_name) {
+                case 'Хочу потребительский':
+                  this.finalStep(2)
+                  break;
+                case 'Хочу кредит без залога':
+                  this.finalStep(0)
+                  break;
+                case 'Сомневаюсь':
+                  this.finalStep(1)
+                  break;
+                default:
+                  break;
+              }
             } else {
               !this.show_button ? this.show_button = true : this.finalStep(0);
             }
             break;
           case 2:
-            this.category_id !== 0 ? this.step = 5 : this.finalStep(8);
+            switch (btn_name) {
+              case 'Сомневаюсь':
+                this.finalStep(1);
+                break;
+              default:
+                this.category_id !== 0 ? this.step = 5 : this.finalStep(8);
+                break;
+            }
             break;
           default:
             this.finalStep(0);
             break;
         }
       }
-
-      // More that one million
-      /*let stopTest = this.amount === 3 && this.current_question + 1 === this.all_qestions.length;
-
-      // if button = true
-      if (stopTest && button_answer === 0) {
-        this.finalStep(2);
-      }*/
 
     },
 
@@ -781,7 +887,7 @@ export default {
       }
       this.answer_text   = false;
       this.button_active = false;
-      this.next          = false;
+      //this.next          = false;
       this.attempt       = 0;
       this.getData(this.data);
     },
@@ -791,7 +897,7 @@ export default {
       this.current_question === 0 ? this.step-- : null;
       this.current_question !== 0 ? this.current_question-- : null;
       this.buttons       = this.data["variants_buttons"][this.step]
-      this.next          = false;
+      //this.next          = false;
       this.answer_text   = false;
       this.button_active = false;
       this.buttons       = this.data["variants_buttons"][this.step];
@@ -800,22 +906,39 @@ export default {
       this.getData(this.data);
     },
 
-    textInfoNext(next) {
+    textInfoNext(next, btn_name) {
 
       if (this.text_info < this.leasing.length - 1) {
         this.text_info++
       } else {
         if (next) {
-
           switch (next) {
             case 'finalStep_0':
-              this.finalStep(0);
+              btn_name === 'Рассчитать потребительский кредит' ? this.finalStep(2) :  this.finalStep(0);
               break;
             case 'finalStep_1':
-              this.finalStep(1);
+              switch (btn_name) {
+                case 'У меня нет квартиры в&nbsp;собственности':
+                  this.finalStep(0)
+                  break;
+                case 'Рассчитать потребительский кредит':
+                  this.finalStep(2)
+                  break;
+                default:
+                  this.finalStep(1)
+                  break;
+              }
               break;
             case 'finalStep_2':
-              this.finalStep(2);
+              switch (btn_name) {
+                case 'Рассчитать кредит под залог недвижимости':
+                case 'Отлично, выбираю кредит под залог':
+                  this.finalStep(1)
+                  break;
+                default:
+                  this.finalStep(2)
+                  break;
+              }
               break;
             case 'step-8':
               this.category_id !== 0 ? this.step = 5 : this.step = 8;
@@ -863,7 +986,7 @@ export default {
       this.step_prev_2 = this.step_prev;
       this.step_prev   = this.step;
 
-      this.next = false;
+      //this.next = false;
       this.step === 3 && this.category_id === 3 && this.purchase_method === 4 ? this.step = 6 : this.step++;
     },
 
@@ -875,10 +998,13 @@ export default {
   },
 
   mounted() {
+    this.production = process.env.NODE_ENV === 'production'
+
     axios.get('./data.json').then(response => (this.getData(this.data = response.data)));
   }
 
 }
+
 </script>
 
 <style lang='scss'>

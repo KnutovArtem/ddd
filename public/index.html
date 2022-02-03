@@ -1,65 +1,132 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.svg">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+<html lang=''>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width,initial-scale=1.0'>
+  <link rel='icon' href='<%= BASE_URL %>favicon.svg'>
+  <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <link rel="preload" href="<%= require('@/fonts/TinkoffSans.woff2') %>" type='font/woff2' as="font" crossorigin>
+  <link rel='preload' href="<%= require('@/fonts/TinkoffSans.woff2') %>" type='font/woff2' as='font' crossorigin>
 
 
-    <link rel="preload" href="<%= require('@/img/section/main.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/main.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/main.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/main.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka__purchase-method.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka__purchase-method.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka__purchase-method.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka__purchase-method.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka_calc.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka_calc.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka_calc.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka_calc.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka_type-credit.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka_type-credit.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka_type-credit.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka_type-credit.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-auto.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-auto.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-auto.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-auto.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-before-finish.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-before-finish.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-before-finish.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-before-finish.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-credits.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-credits.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-credits.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-credits.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-money.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-money.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-money.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-money.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-result.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-result.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-result.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-result.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-terminator.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-terminator.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-terminator.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-terminator.webp') %>" type='image/webp' as='image'>
 
-    <link rel="preload" href="<%= require('@/img/section/monetka-test.png') %>" type="image/png" as="image">
-    <link rel="preload" href="<%= require('@/img/section/monetka-test.webp') %>" type="image/webp" as="image">
+  <link rel='preload' href="<%= require('@/img/section/monetka-test.png') %>" type='image/png' as='image'>
+  <link rel='preload' href="<%= require('@/img/section/monetka-test.webp') %>" type='image/webp' as='image'>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-9110453-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src='https://www.googletagmanager.com/gtag/js?id=UA-9110453-17'></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-9110453-17');
+  </script>
 
-        gtag('config', 'UA-9110453-3');
-    </script>
-    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("VK-RTRG-1197492-i1uTD"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-1197492-i1uTD" style="position:fixed; left:-999px;" alt=""/></noscript>
-  </head>
+  <!-- VK Pixel Code -->
+  <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("VK-RTRG-218928-gWfNz"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-451656-gFugK" style="position:fixed; left:-999px;" alt=""/></noscript>
+
+  <script type='text/javascript'>!function () {
+      var t = document.createElement("script");
+      t.type = "text/javascript", t.async = !0, t.src = "https://vk.com/js/api/openapi.js?169", t.onload = function () {
+          VK.Retargeting.Init("VK-RTRG-1197492-i1uTD"), VK.Retargeting.Hit()
+      }, document.head.appendChild(t)
+  }();</script>
+  <noscript>
+    <img src='https://vk.com/rtrg?p=VK-RTRG-1197492-i1uTD' style='position:fixed; left:-999px;' alt=''/>
+  </noscript>
+  <!-- End VK Pixel Code -->
+
+  <noscript>
+    <img src="https://top-fwz1.mail.ru/tracker?id=3233186;e=RG%3A/trg-pixel-4072680-1638444435702;_={{random}}"/>
+  </noscript>
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+          'gtm.start': new Date().getTime(),
+          event:       'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0], j = d.c
+      reateElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src   = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', 'GTM-T3LG9WM');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Facebook Pixel Code -->
+  <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1091302184254777');
+      fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1091302184254777&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Facebook Pixel Code -->
+
+  <!-- TikTok Code -->
+  <script>
+      !function (w, d, t) {
+          w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++
+          )ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=i+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+          ttq.load('6989921943407345665');
+          ttq.page();
+      }(window, document, 'ttq');
+  </script>
+  <!-- End TikTok Code -->
+
+</head>
 <!--style='overflow-y: visible !important'-->
-  <body >
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src='https://www.googletagmanager.com/ns.html?id=GTM-T3LG9WM'
+            height='0' width='0' style='display:none;visibility:hidden'></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id='app'></div>
+  <!-- built files will be auto injected -->
+</body>
 </html>
