@@ -642,6 +642,22 @@ a, p {
 
   }
 
+  .section__buttons.flex {
+
+    button {
+      width: calc(50% - 7px);
+
+      @media screen and (max-width: 1070px) and (min-width: 870px) {
+        width: 100%;
+        margin: 0 0 15px 0 !important;
+      }
+      @media screen and (max-width: 480px) {
+        width: 100% !important;
+        margin: 0 0 10px 0 !important;
+      }
+    }
+  }
+
   .section__buttons__2 {
     display: flex;
     flex-wrap: wrap !important;

@@ -43,7 +43,7 @@
           </p>
           <button class='first-screen__button button--black'
                   @click='start=false'
-                  onclick="dataLayer.push({'event': 'knquiz_start'});">Начать</button>
+                  onclick="fbq('track', 'knquiz_start'); VK.Retargeting.Event('knquiz_start'); dataLayer.push({'event': 'knquiz_start'});">Начать</button>
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -178,7 +178,7 @@
             <button class='button--black'
                     @click='choice()' v-html='this.your_choice_button'/>
             <!--Button "Рассчитать кредит"-->
-            <button v-if='this.purchase_method === 0' class='button--bd' @click='showButtonCredit("type_credit")' v-html='showButtonCredit("name_btn")'/>
+            <button v-if='this.purchase_method === 0' class='button--black' @click='showButtonCredit("type_credit")' v-html='showButtonCredit("name_btn")'/>
 
 
             <!--            <button class='button&#45;&#45;bd' v-if='this.purchase_method === 0 && this.amount === 0'
@@ -281,6 +281,8 @@
         </div>
 
       </div>
+
+<!--  541202    -->
       <!--section - 7-->
       <div class='section' id='table' v-if='this.step === 5'>
         <picture class='section__picture'>
@@ -288,11 +290,8 @@
           <img class='img' :src='require(`@/img/section/monetka-test.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
         <div class='section__text'>
-
           <div class='table' :class='showTable()'/>
-
           <p class='section__heading'> Ну что, убедили? </p>
-
           <div v-if='this.category_id === 0 &&  this.amount !== 3' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id="`'step-${this.step}`">
             <button class='button--black' @click='finalStep(0)'> Хочу автокредит</button>
             <button class='button--black' @click='finalStep(2)'> Нет, хочу потребительский</button>
@@ -301,17 +300,17 @@
             <button class='button--black' @click='finalStep(1)'>Хочу кредит под залог недвижимости</button>
             <button class='button--black' @click='finalStep(2)'>Нет, хочу потребительский</button>
           </div>
-          <div v-if='this.category_id !== 0' class='section__buttons' :class="'amount-' + this.purchase_method_id" :id='`step-${this.step}`'>
+          <div v-if='this.category_id !== 0' class='section__buttons flex' :class="'amount-' + this.purchase_method_id" :id='`step-${this.step}`'>
             <button class='button--black' @click='finalStep(1)'>Хочу кредит под залог недвижимости</button>
+            <button class='button--black' @click='finalStep(2)'>Нет, хочу потребительский</button>
           </div>
-
           <button class='button--back' @click='this.show_button = false; stepPrev();'> Назад</button>
-
         </div>
         <div class='background' :class="'section_' + this.step">
           <div class='blur'></div>
         </div>
       </div>
+
       <!--section - 8-->
       <div class='section' v-if='this.step === 6'>
 
@@ -398,20 +397,20 @@
                     v-show='this.result["nameEvent"] === "knquiz_selectkn"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
                     @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
-                    onclick="fbq('knquiz_selectkn'); VK.Retargeting.Event('knquiz_selectkn'); dataLayer.push({'event': 'knquiz_selectkn'});"
+                    onclick="fbq('track', 'knquiz_selectkn'); VK.Retargeting.Event('knquiz_selectkn'); dataLayer.push({'event': 'knquiz_selectkn'});"
                     v-html='button'/>
             <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectknz"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
                     @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
-                    onclick="fbq('knquiz_selectknz'); VK.Retargeting.Event('knquiz_selectknz'); dataLayer.push({'event': 'knquiz_selectknz'});"
+                    onclick="fbq('track', 'knquiz_selectknz'); VK.Retargeting.Event('knquiz_selectknz'); dataLayer.push({'event': 'knquiz_selectknz'});"
 
                     v-html='button'/>
             <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectkna"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
                     @click='this.typeCredit(button, this.result["heading"]); this.step = 10;'
-                    onclick="fbq('knquiz_selectkna'); VK.Retargeting.Event('knquiz_selectkna'); dataLayer.push({'event': 'knquiz_selectkna'});"
+                    onclick="fbq('track', 'knquiz_selectkna'); VK.Retargeting.Event('knquiz_selectkna'); dataLayer.push({'event': 'knquiz_selectkna'});"
                     v-html='button'/>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
@@ -433,11 +432,10 @@
         <div class='section__text'>
           <p>Тут надо хорошенько подумать. Хотя и&nbsp;для такого случая у&nbsp;нас есть несколько предложений.</p>
           <p>Ты можешь взять кредит без залога, но сумма будет не такой большой — до 2 млн рублей. Зато деньги можно получить в&nbsp;ближайшее время: заявку рассматриваем в&nbsp;тот же день, а&nbsp;карту с деньгами привозим на следующий. </p>
-          <p>Если нужна сумма побольше, выбирай кредит под залог недвижимости. А&nbsp;если у&nbsp;тебя нет своей, можно договориться с родственниками, чтобы разрешили оформить кредит под залог их квартиры. Квартира останется у&nbsp;них в&nbsp;собственности, а&nbsp;тебе могут одобрить сумму до 15 млн со ставкой от 8,9%. При этом никакой волокиты: для оформления потребуются только паспорт и&nbsp;СНИЛС. </p>
-          <p>Оба варианта хороши. Выбирай тот, который больше подходит, и&nbsp;вперёд — к&nbsp;квартире своей мечты!</p>
+          <p>Если нужна сумма побольше, выбирай автокредит. который можно оформить под залог авто. Машина остается у&nbsp;тебя в&nbsp;собственности, а&nbsp;тебе могут ободрить сумма до 3&nbsp;млн со&nbsp;ставкой от&nbsp;8,9%.</p>
           <div class='section__buttons' :id="'step-' + this.step">
-            <button class='button--black' @click='this.finalStep(1)'>Оформить потребительский кредит</button>
-            <button class='button--black' @click='this.finalStep(1)'>Оформить кредит с залогом</button>
+            <button class='button--black' @click='this.finalStep(1)'>Рассчитать потребительский кредит</button>
+            <button class='button--black' @click='this.finalStep(0)'>Оформить автокредит</button>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
         </div>
@@ -569,9 +567,9 @@ export default {
         let name = "";
 
         if (this.category_id === 0) {
-          this.amount === 3 ? name = "Рассчитать кредит под залог недвижимости" : name = "Рассчитать авто кредит";
+          this.amount === 3 ? name = "Рассчитать кредит" : name = "Рассчитать автокредит";
         } else {
-          this.amount === 0 ? name = `Рассчитать кредит под залог недвижимости до&nbsp;2&#8209;15&nbsp;млн` : name = "Рассчитать потребительский кредит- до 2 млн";
+          this.amount === 0 ? name = `Рассчитать кредит` : name = "Рассчитать потребительский кредит";
         }
 
         return name
@@ -595,6 +593,11 @@ export default {
     },
 
     typeCredit(type, heading) {
+      console.log('');
+      console.log('typeCredit:');
+      console.log('type: ', type);
+      console.log('heading: ', heading);
+      console.log('');
       switch (type) {
         case 'Рассчитать потребительский кредит':
         case 'Хочу потребительский кредит':
@@ -805,6 +808,12 @@ export default {
 
     getAnswer(button_answer, btn_name) {
 
+      console.log('');
+      console.log('getAnswer:');
+      console.log('getbutton_answer: ', button_answer);
+      console.log('btn_name: ', btn_name);
+      console.log('');
+
       function resetAnswer(that) {
         that.next           = true;
         that.answer_text    = true;
@@ -908,13 +917,30 @@ export default {
 
     textInfoNext(next, btn_name) {
 
+      console.log('');
+      console.log('923 textInfoNext:');
+      console.log('next: ', next);
+      console.log('btn_name: ', btn_name);
+      console.log('');
+
       if (this.text_info < this.leasing.length - 1) {
         this.text_info++
       } else {
         if (next) {
           switch (next) {
             case 'finalStep_0':
-              btn_name === 'Рассчитать потребительский кредит' ? this.finalStep(2) :  this.finalStep(0);
+              switch (btn_name) {
+                case 'Рассчитать потребительский кредит':
+                  this.finalStep(2)
+                  break;
+                case 'Рассчитать кредит под залог недвижимости':
+                case 'Отлично, выбираю кредит под залог':
+                  this.finalStep(1)
+                  break;
+                default:
+                  this.finalStep(0);
+                  break;
+              }
               break;
             case 'finalStep_1':
               switch (btn_name) {
