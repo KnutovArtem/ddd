@@ -569,7 +569,7 @@ export default {
         if (this.category_id === 0) {
           this.amount === 3 ? name = "Рассчитать кредит" : name = "Рассчитать автокредит";
         } else {
-          this.amount === 0 ? name = `Рассчитать кредит` : name = "Рассчитать потребительский кредит";
+          this.amount === 0 ? name = `Рассчитать кредит` : name = "Рассчитать кредит";
         }
 
         return name
