@@ -1,5 +1,5 @@
 <template>
-  <main class='main' :class='{result: this.step === 10}'>
+  <main :class="['main', {result: this.step === 10}, {'start' : start}, 'step_' + this.step, 'category_' + this.category_id]">
 
     <div v-if='false' style='display: flex; justify-content:space-between; width: 100%; padding: 10px 20px 0 20px; position:absolute;' >
       <p style='font-size: 10px;'>пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}</p>
@@ -254,7 +254,7 @@
       <!--section - 6-->
       <div class='section' v-if='this.step === 4 && this.purchase_method !== 0'>
 
-        <picture class='section__picture'>
+        <picture class='section__picture' :id="'pic__step-' + this.step">
           <source :srcset='require(`@/img/section/monetka-test.webp`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/monetka-test.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
@@ -392,7 +392,7 @@
             <p v-for='desc in this.result["desc"]' :key='desc' v-html='desc'/>
           </div>
 
-          <div class='section__buttons' :id="'step-' + this.step">
+          <div :class="['section__buttons', 'cat_' + this.category_id]" :id="'step-' + this.step">
             <button class='button--black'
                     v-show='this.result["nameEvent"] === "knquiz_selectkn"'
                     v-for='(button, index) in this.result["buttons"]' :key='index'
@@ -434,7 +434,7 @@
           <p>Ты можешь взять кредит без залога, но сумма будет не такой большой — до 2 млн рублей. Зато деньги можно получить в&nbsp;ближайшее время: заявку рассматриваем в&nbsp;тот же день, а&nbsp;карту с деньгами привозим на следующий. </p>
           <p>Если нужна сумма побольше, выбирай автокредит. который можно оформить под залог авто. Машина остается у&nbsp;тебя в&nbsp;собственности, а&nbsp;тебе могут ободрить сумма до 3&nbsp;млн со&nbsp;ставкой от&nbsp;8,9%.</p>
           <div class='section__buttons' :id="'step-' + this.step">
-            <button class='button--black' @click='this.finalStep(1)'>Рассчитать потребительский кредит</button>
+            <button class='button--black' @click='this.finalStep(2)'>Рассчитать потребительский кредит</button>
             <button class='button--black' @click='this.finalStep(0)'>Оформить автокредит</button>
           </div>
           <button class='button--back' @click='stepPrev();'> Назад</button>
@@ -557,8 +557,6 @@ export default {
       error:         false
     }
   },
-
-
 
   methods: {
     showButtonCredit(e) {
