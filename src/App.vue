@@ -1,7 +1,7 @@
 <template>
   <main :class="['main', {result: this.step === 10}, {'start' : start}, 'step_' + this.step, 'category_' + this.category_id]">
 
-    <div v-if='false' style='display: flex; justify-content:space-between; width: 100%; padding: 10px 20px 0 20px; position:absolute;' >
+    <div v-if='false' style='display: flex; justify-content:space-between; width: 100%; padding: 10px 20px 0 20px; position:absolute;'>
       <p style='font-size: 10px;'>пред. шаг - {{ this.step_prev_2 }} / {{ this.step_prev }}</p>
       <p style='font-size: 10px;'>шаг - {{ this.step }}</p>
       <p style='font-size: 10px;'>категория (category_id) - {{ this.category_id }}</p>
@@ -23,14 +23,14 @@
         АО «Тинькофф Банк», лицензия ЦБ РФ № 2673
       </p>
 
-      <div class='section first-screen' v-if='start'>
+      <div class='first-screen' v-if='start'>
 
-        <picture class='section__picture'>
+        <picture class='first-screen__picture'>
           <source :srcset='require(`@/img/section/main.webp`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/main.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
 
-        <div class='section__text'>
+        <div class='first-screen__text'>
           <div class='first-screen__heading'>
             <h1 class='h1'>
               ЧТО ДЕЛАТЬ <span class='icon'>ЕСЛИ</span>
@@ -43,7 +43,8 @@
           </p>
           <button class='first-screen__button button--black'
                   @click='start=false'
-                  onclick="fbq('track', 'knquiz_start'); VK.Retargeting.Event('knquiz_start'); dataLayer.push({'event': 'knquiz_start'});">Начать</button>
+                  onclick="fbq('track', 'knquiz_start'); VK.Retargeting.Event('knquiz_start'); dataLayer.push({'event': 'knquiz_start'});">Начать
+          </button>
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -78,10 +79,11 @@
         </div>
 
       </div>
+
       <!--section - 2-->
       <div class='section' v-if='this.step === 1'>
 
-        <picture class='section__picture' v-if='this.category_id === 0'>
+        <picture :class="['section__picture', {'auto': step === 1 && category_id === 0 } ]" v-if='this.category_id === 0'>
           <source :srcset='require(`@/img/section/monetka-auto.webp`)' type='image/webp'>
           <img class='img' :src='require(`@/img/section/monetka-auto.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
@@ -114,6 +116,7 @@
           </div>
 
           <button class='button--black' v-if='false' @click='errorClass(this.$refs.btns2); stepNext();'>Далее</button>
+
           <button class='button--back' @click=stepPrev();>Назад</button>
 
         </div>
@@ -123,6 +126,7 @@
         </div>
 
       </div>
+
       <!--section - 3-->
       <div class='section' id='purchase-method' v-if='this.step === 2'>
 
@@ -149,6 +153,7 @@
         </div>
 
       </div>
+
       <!--section - 4-->
       <div class='section' :id='`cat_id_${this.category_id}`' v-if='this.step === 3'>
 
@@ -190,6 +195,7 @@
           </div>
 
           <button class='button--back' @click=stepPrev();> Назад</button>
+
         </div>
 
         <div class='background' :class="'section_' + this.step">
@@ -197,6 +203,7 @@
         </div>
 
       </div>
+
       <!--section - 5-->
       <div class='section' id='test' v-if='this.step === 4 && this.purchase_method === 0'>
 
@@ -211,7 +218,7 @@
           <img class='img' :src='require(`@/img/section/monetka-test.png`)' alt='' loading='lazy' rel='preload'>
         </picture>
 
-        <div class='section__text' :class='`text_${this.step}`'>
+        <div :class="['section__text', {'test': step === 4}]">
 
           <h2 class='section__heading h2' v-html='this.test_question'/>
 
@@ -237,14 +244,15 @@
           <button class='button--black' v-if='!show_button && answer_text' @click='errorClass(this.$refs.btns4);  qestionNext();'>Далее</button>
           <button class='button--black' v-if='show_button' @click='stepNext();'>Давай сравним</button>
 
-          <button class='button--back' @click='qestionPrev();'> Назад</button>
-
           <div class='progress-test' v-if='this.current_question + 1 < this.all_qestions.length'>
             <p>0{{ this.current_question + 1 }}</p>
             <p>из {{ this.all_qestions.length - 1 }}</p>
           </div>
 
+          <button class='button--back' @click='qestionPrev();'> Назад</button>
+
         </div>
+
 
         <div class='background' :class="'section_' + this.step">
           <div class='blur'></div>
@@ -282,7 +290,6 @@
 
       </div>
 
-<!--  541202    -->
       <!--section - 7-->
       <div class='section' id='table' v-if='this.step === 5'>
         <picture class='section__picture'>
@@ -462,7 +469,7 @@
           <div class='iframe'>
             <iframe v-if=' this.result_type_credit === "Автокредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/auto-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
 
-            <iframe  v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
+            <iframe v-if=' this.result_type_credit === "Потребительский кредит"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
 
             <iframe v-if=' this.result_type_credit === "Кредит под залог недвижимости"' width='100%' height='100%' frameborder='0' src='https://www.tinkoff.ru/loans/cash-loan/realty/iframe/form/?parent_url={encodeURIComponent(document.location.href)}'></iframe>
           </div>
@@ -472,16 +479,12 @@
             <p>АО «Тинькофф Банк», лицензия ЦБ&nbsp;РФ&nbsp;№&nbsp;2673</p>
             <p>Пример расчета условий по кредиту носит исключительно информационный характер и&nbsp;не является публичной офертой.</p>
             <p>Сумма кредита, указанная в&nbsp;рекламном предложении, не является офертой. Банк определяет сумму кредита по результатам рассмотрения заявки. Процентная ставка, годовых:
-              <br>
-               1) базовая – от&nbsp;8,9% до&nbsp;30%;
-              <br>
-               2) при неучастии Клиента в&nbsp;«Программе страховой защиты заемщиков Банка 3.0» (Программа), если требуется кредитным договором – от 12,2% до 30%;
-              <br>
-               3) при прекращении Договора залога, невыдаче закладной либо признании ее недействительной, если нет обеспечения в&nbsp;виде залога недвижимости:
-              <br>
-               +5% процентных пунктов (п.п.) к ставке;
-              <br>
-               4) если не предоставлен договор страхования рисков утраты и&nbsp;повреждения Предмета залога: +0,5% п.п. к ставке. Плата за включение в&nbsp;Программу: 0,3% от Кредита в&nbsp;месяц. Кредит: до 15 млн ₽, срок от&nbsp;3 мес. до&nbsp;15 лет. Условия применимы к Тарифному плану КНЗ 3.15 (рубли РФ). Ставка и&nbsp;иные платежи, определяющие полную стоимость кредита, устанавливаются для каждого Клиента в&nbsp;индивидуальном порядке и&nbsp;указываются в&nbsp;индивидуальных условиях договора кредита под залог недвижимости. Банк вправе запросить иные документы у&nbsp;всех участников сделки. Кредит зачисляется на карту на след. день после регистрации ипотеки в&nbsp;Росреестре или ранее по решению Банка.`</p>
+              <br> 1) базовая – от&nbsp;8,9% до&nbsp;30%;
+              <br> 2) при неучастии Клиента в&nbsp;«Программе страховой защиты заемщиков Банка 3.0» (Программа), если требуется кредитным договором – от 12,2% до 30%;
+              <br> 3) при прекращении Договора залога, невыдаче закладной либо признании ее недействительной, если нет обеспечения в&nbsp;виде залога недвижимости:
+              <br> +5% процентных пунктов (п.п.) к ставке;
+              <br> 4) если не предоставлен договор страхования рисков утраты и&nbsp;повреждения Предмета залога: +0,5% п.п. к ставке. Плата за включение в&nbsp;Программу: 0,3% от Кредита в&nbsp;месяц. Кредит: до 15 млн ₽, срок от&nbsp;3 мес. до&nbsp;15 лет. Условия применимы к Тарифному плану КНЗ 3.15 (рубли РФ). Ставка и&nbsp;иные платежи, определяющие полную стоимость кредита, устанавливаются для каждого Клиента в&nbsp;индивидуальном порядке и&nbsp;указываются в&nbsp;индивидуальных условиях договора кредита под залог недвижимости. Банк вправе запросить иные документы у&nbsp;всех участников сделки. Кредит зачисляется на карту на след. день после регистрации ипотеки в&nbsp;Росреестре или ранее по решению Банка.`
+            </p>
 
           </div>
 
@@ -510,7 +513,7 @@ export default {
 
   data() {
     return {
-      production: false,
+      production:          false,
       data:                [],
       start:               true,
       next:                true,
@@ -625,8 +628,8 @@ export default {
     finalStep(type_credit) {
       this.result_type_credit = type_credit;
       this.getData(this.data);
-      this.step_prev          = this.step;
-      this.step               = 7;
+      this.step_prev = this.step;
+      this.step      = 7;
     },
 
     activeClassButton(button_answer) {
@@ -1019,11 +1022,11 @@ export default {
         return "table-2"
       }
     }
+
   },
 
   mounted() {
     this.production = process.env.NODE_ENV === 'production'
-
     axios.get('./data.json').then(response => (this.getData(this.data = response.data)));
   }
 
