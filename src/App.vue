@@ -185,13 +185,6 @@
             <!--Button "Рассчитать кредит"-->
             <button v-if='this.purchase_method === 0' class='button--black' @click='showButtonCredit("type_credit")' v-html='showButtonCredit("name_btn")'/>
 
-
-            <!--            <button class='button&#45;&#45;bd' v-if='this.purchase_method === 0 && this.amount === 0'
-                                @click='this.finalStep(0)'>
-                                Рассчитать автокредит </button>
-                        <button class='button&#45;&#45;bd' v-if='this.purchase_method === 0 && this.amount === 3'
-                                @click='this.finalStep(1)'>
-                          Рассчитать кредит под залог недвижимости</button>-->
           </div>
 
           <button class='button--back' @click=stepPrev();> Назад</button>
