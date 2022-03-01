@@ -71,7 +71,6 @@
                     @click='stepNext(); renderButtons(1, id, category_name);'
                     v-html='category_name'/>
           </div>
-          <!--<button class='button&#45;&#45;black' @click='errorClass(this.$refs.btns); stepNext();'>Далее</button>-->
         </div>
 
         <div class='background' :class="'section_' + this.step">
