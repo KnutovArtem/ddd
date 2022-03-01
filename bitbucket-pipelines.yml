@@ -10,15 +10,15 @@ pipelines:
   master:
         - step:
            script:
-             - git remote add sync git@github.com:KnutovArtem/ci_cd/master.git
-             - git checkout master
+             - git remote add sync git@github.com:KnutovArtem/ci_cd.git
+             - git checkout main
              - git pull
-             - git push sync master
+             - git push sync main
 
   Before_editing:
         - step:
            script:
-             - git remote add sync git@github.com:KnutovArtem/ci_cd/Before_editing.git
+             - git remote add sync git@github.com:KnutovArtem/ci_cd.git
              - git checkout Before_editing
              - git pull
              - git push sync Before_editing
