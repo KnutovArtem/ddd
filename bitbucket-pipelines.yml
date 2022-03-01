@@ -10,7 +10,7 @@ pipelines:
   master:
         - step:
            script:
-             - git remote add sync git@github.com:KnutovArtem/ci_cd.git
+             - git remote add sync git@github.com:KnutovArtem/ddd.git
              - git checkout master
              - git pull
              - git push sync master
