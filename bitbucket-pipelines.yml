@@ -11,9 +11,9 @@ pipelines:
         - step:
            script:
              - git remote add sync git@github.com:KnutovArtem/ci_cd.git
-             - git checkout main
+             - git checkout master
              - git pull
-             - git push sync main
+             - git push sync master
 
   Before_editing:
         - step:
