@@ -155,7 +155,6 @@
 
       <!--section - 4-->
       <div class='section' :id='`cat_id_${this.category_id}`' v-if='this.step === 3'>
-
         <picture class='section__picture'
                  v-if='this.step === 3 && this.purchase_method !== 0'
                  :class="'pic_' + this.purchase_method"
